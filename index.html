@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inscripción — Power BI para Business Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy-deep:  #08213a;
+      --navy:       #0f3054;
+      --blue:       #1a5080;
+      --blue-mid:   #2176ae;
+      --gold:       #f5c842;
+      --gold-light: #fde98a;
+      --white:      #ffffff;
+      --off-white:  #f2f6fb;
+      --muted:      #94afc8;
+      --ink:        #1a2e40;
+      --border:     rgba(255,255,255,0.12);
+      --radius:     16px;
+      --shadow:     0 20px 60px rgba(8,33,58,.45);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--navy-deep);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    /* ── FONDO ANIMADO ── */
+    .bg-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 10% 20%, rgba(33,118,174,.25) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 90% 80%, rgba(245,200,66,.08) 0%, transparent 55%),
+        linear-gradient(160deg, #08213a 0%, #0f3054 50%, #0a1e31 100%);
+      overflow: hidden;
+    }
+
+    .bg-layer::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(255,255,255,.025) 40px),
+        repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255,255,255,.025) 40px);
+      background-size: 40px 40px;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: .18;
+      animation: drift 14s ease-in-out infinite alternate;
+    }
+    .orb-1 { width: 500px; height: 500px; background: var(--blue-mid); top: -100px; left: -150px; animation-delay: 0s; }
+    .orb-2 { width: 350px; height: 350px; background: var(--gold); top: 60%; right: -80px; animation-delay: -5s; }
+    .orb-3 { width: 250px; height: 250px; background: #1a90d0; bottom: 80px; left: 30%; animation-delay: -10s; }
+
+    @keyframes drift {
+      from { transform: translate(0, 0) scale(1); }
+      to   { transform: translate(30px, 20px) scale(1.07); }
+    }
+
+    /* ── WRAPPER ── */
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 640px;
+      padding: 40px 20px 60px;
+    }
+
+    /* ── LOGO BADGE ── */
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 36px;
+      animation: fadeDown .6s ease both;
+    }
+
+    .brand-icon {
+      width: 44px; height: 44px;
+      background: linear-gradient(135deg, var(--blue-mid), #0e6fc0);
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 4px 16px rgba(33,118,174,.5);
+    }
+
+    .brand-icon svg { width: 24px; height: 24px; fill: white; }
+
+    .brand-name {
+      font-family: 'Sora', sans-serif;
+      font-weight: 800;
+      font-size: 1.15rem;
+      color: var(--white);
+      letter-spacing: .03em;
+    }
+
+    .brand-name span { color: var(--gold); }
+
+    /* ── CARD ── */
+    .card {
+      background: rgba(255,255,255,.05);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 40px 36px 44px;
+      box-shadow: var(--shadow);
+      animation: fadeUp .7s ease both;
+    }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── HEADER CARD ── */
+    .course-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(245,200,66,.14);
+      border: 1px solid rgba(245,200,66,.3);
+      color: var(--gold);
+      font-family: 'Sora', sans-serif;
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 999px;
+      margin-bottom: 16px;
+    }
+
+    .course-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+      display: inline-block;
+      animation: pulse 1.6s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: .4; transform: scale(.7); }
+    }
+
+    .card-title {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(1.35rem, 3.5vw, 1.75rem);
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+
+    .card-title span { color: var(--gold); }
+
+    .card-sub {
+      font-size: .95rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin-bottom: 28px;
+    }
+
+    /* ── PILLS INFO ── */
+    .pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: .78rem;
+      font-weight: 600;
+      color: rgba(255,255,255,.75);
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.1);
+      padding: 5px 11px;
+      border-radius: 999px;
+    }
+
+    .pill-icon { font-size: .85em; }
+
+    /* ── FORM ── */
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .form-full { margin-bottom: 14px; }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .field label {
+      font-size: .78rem;
+      font-weight: 600;
+      color: rgba(255,255,255,.55);
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+
+    .field input,
+    .field textarea {
+      background: rgba(255,255,255,.07);
+      border: 1.5px solid rgba(255,255,255,.12);
+      border-radius: 12px;
+      padding: 13px 16px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .97rem;
+      color: var(--white);
+      outline: none;
+      transition: border-color .2s, background .2s, box-shadow .2s;
+      width: 100%;
+    }
+
+    .field input::placeholder,
+    .field textarea::placeholder { color: rgba(255,255,255,.28); }
+
+    .field input:focus,
+    .field textarea:focus {
+      border-color: var(--blue-mid);
+      background: rgba(33,118,174,.12);
+      box-shadow: 0 0 0 4px rgba(33,118,174,.18);
+    }
+
+    .field input.invalid,
+    .field textarea.invalid {
+      border-color: #e05a5a;
+      box-shadow: 0 0 0 4px rgba(224,90,90,.18);
+    }
+
+    .field textarea {
+      resize: vertical;
+      min-height: 110px;
+      line-height: 1.55;
+    }
+
+    /* ── SUBMIT BUTTON ── */
+    .btn-submit {
+      width: 100%;
+      padding: 16px 20px;
+      background: linear-gradient(135deg, var(--blue-mid) 0%, #0e6fc0 100%);
+      color: var(--white);
+      border: none;
+      border-radius: 14px;
+      font-family: 'Sora', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      transition: transform .15s, box-shadow .15s, filter .15s;
+      box-shadow: 0 8px 28px rgba(33,118,174,.45);
+      margin-top: 8px;
+    }
+
+    .btn-submit:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 36px rgba(33,118,174,.55);
+      filter: brightness(1.08);
+    }
+
+    .btn-submit:active:not(:disabled) { transform: translateY(0); }
+
+    .btn-submit:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+    }
+
+    .btn-icon { font-size: 1.15em; transition: transform .3s; }
+    .btn-submit:hover:not(:disabled) .btn-icon { transform: translateX(3px); }
+
+    /* ── SPINNER ── */
+    .spinner {
+      width: 18px; height: 18px;
+      border: 2px solid rgba(255,255,255,.35);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+      display: none;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── MSG ── */
+    #msg-insc {
+      text-align: center;
+      font-size: .9rem;
+      font-weight: 600;
+      min-height: 24px;
+      margin-top: 12px;
+      color: var(--muted);
+    }
+
+    /* ── FOOTER CARD ── */
+    .card-footer {
+      text-align: center;
+      margin-top: 22px;
+      font-size: .82rem;
+      color: rgba(255,255,255,.32);
+      line-height: 1.7;
+    }
+
+    .card-footer a {
+      color: var(--gold);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    /* ── MODAL ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(8,33,58,.75);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: none;
+      place-items: center;
+      padding: 20px;
+    }
+
+    .modal-overlay.show { display: grid; animation: fadeIn .25s ease; }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    .modal-box {
+      background: linear-gradient(150deg, #0f3054, #183d62);
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 24px;
+      padding: 48px 40px 40px;
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 30px 80px rgba(0,0,0,.5);
+      animation: popUp .3s cubic-bezier(.34,1.56,.64,1) both;
+    }
+
+    @keyframes popUp {
+      from { opacity: 0; transform: scale(.85) translateY(20px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .modal-icon {
+      font-size: 3.5rem;
+      margin-bottom: 16px;
+      display: block;
+      animation: bounce .6s ease .2s both;
+    }
+
+    @keyframes bounce {
+      from { transform: scale(0); opacity: 0; }
+      60%  { transform: scale(1.15); }
+      to   { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-title {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.55rem;
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 10px;
+    }
+
+    .modal-body {
+      color: var(--muted);
+      font-size: .95rem;
+      line-height: 1.65;
+      margin-bottom: 30px;
+    }
+
+    .modal-body strong { color: var(--white); }
+
+    .btn-modal-close {
+      background: linear-gradient(135deg, #25D366, #1fba58);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 13px 28px;
+      font-family: 'Sora', sans-serif;
+      font-size: .95rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform .15s, filter .15s;
+      box-shadow: 0 6px 20px rgba(37,211,102,.4);
+      text-decoration: none;
+    }
+
+    .btn-modal-close:hover { transform: translateY(-2px); filter: brightness(1.08); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 500px) {
+      .card { padding: 28px 20px 32px; }
+      .form-row { grid-template-columns: 1fr; }
+      .modal-box { padding: 36px 24px 32px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Fondo decorativo -->
+  <div class="bg-layer">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <div class="wrapper">
+
+    <!-- Brand -->
+    <div class="brand">
+      <div class="brand-icon">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="10" width="5" height="12" rx="1.5"/>
+          <rect x="9.5" y="6" width="5" height="16" rx="1.5"/>
+          <rect x="17" y="2" width="5" height="20" rx="1.5"/>
+        </svg>
+      </div>
+      <div class="brand-name"><span>POWER BI</span></div>
+    </div>
+
+    <!-- Card principal -->
+    <div class="card">
+
+      <div class="course-badge">Inscripción abierta</div>
+
+      <h1 class="card-title">
+        Power BI para <span>Business Intelligence</span><br>y Analítica de Datos
+      </h1>
+
+      <p class="card-sub">
+        Modelado de datos, Power Query, DAX y dashboards profesionales<br>con apoyo de <strong style="color:rgba(255,255,255,.75)">Inteligencia Artificial</strong>.
+      </p>
+
+      <!-- Pills -->
+      <div class="pills">
+        <span class="pill"><span class="pill-icon">🗂️</span> Modelado de Datos</span>
+        <span class="pill"><span class="pill-icon">⚡</span> Power Query</span>
+        <span class="pill"><span class="pill-icon">📐</span> DAX</span>
+        <span class="pill"><span class="pill-icon">📊</span> Dashboards</span>
+        <span class="pill"><span class="pill-icon">🤖</span> IA Aplicada</span>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Formulario -->
+      <form id="form-insc" novalidate>
+
+        <div class="form-row">
+          <div class="field">
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" name="nombre" placeholder="Ej: María" required autocomplete="given-name">
+          </div>
+          <div class="field">
+            <label for="apellido">Apellido</label>
+            <input type="text" id="apellido" name="apellido" placeholder="Ej: García" required autocomplete="family-name">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label for="email">Correo electrónico</label>
+            <input type="email" id="email" name="email" placeholder="ejemplo@correo.com" required autocomplete="email">
+          </div>
+          <div class="field">
+            <label for="telefono">Teléfono / WhatsApp</label>
+            <input type="tel" id="telefono" name="telefono" placeholder="+595 9xx xxx xxx" required autocomplete="tel">
+          </div>
+        </div>
+
+        <div class="form-full field">
+          <label for="comentarios">Comentarios <span style="opacity:.45;font-weight:400;text-transform:none;">(opcional)</span></label>
+          <textarea id="comentarios" name="comentarios" placeholder="¿Tenés alguna pregunta o consulta sobre el curso?"></textarea>
+        </div>
+
+        <!-- Ocultos -->
+        <input type="hidden" name="Cursos"          value="Power BI para Business Intelligence y Analítica de Datos">
+        <input type="hidden" name="CantidadCursos"  value="1">
+        <input type="hidden" name="Promoción"       value="No">
+
+        <button id="btn-enviar" class="btn-submit" type="submit">
+          <div class="spinner" id="spinner"></div>
+          <span id="btn-text"><span class="btn-icon">✉️</span> Enviar inscripción</span>
+        </button>
+
+        <div id="msg-insc" role="status" aria-live="polite"></div>
+      </form>
+
+      <div class="card-footer">
+        ¿Consultas previas? Escribinos por&nbsp;
+        <a href="https://wa.me/595983319027" target="_blank" rel="noopener">WhatsApp</a>
+        &nbsp;o al&nbsp;
+        <a href="mailto:gausskish@gmail.com">correo electrónico</a>.<br>
+        © 2026 
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Modal de confirmación -->
+  <div class="modal-overlay" id="modal-confirmacion" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
+    <div class="modal-box">
+      <span class="modal-icon">🎉</span>
+      <h2 class="modal-title" id="modal-titulo">¡Inscripción enviada!</h2>
+      <p class="modal-body">
+        Tu inscripción al curso de<br>
+        <strong>Power BI para Business Intelligence</strong><br>
+        fue registrada correctamente.<br><br>
+        En breve recibirás confirmación por correo o WhatsApp. ¡Te esperamos!
+      </p>
+      <a href="https://wa.me/595983319027" target="_blank" rel="noopener" class="btn-modal-close">
+        💬 Contactar por WhatsApp
+      </a>
+      <br><br>
+      <button id="btn-cerrar-modal" style="background:none;border:none;color:rgba(255,255,255,.4);font-size:.85rem;cursor:pointer;font-family:'DM Sans',sans-serif;">
+        Cerrar ventana
+      </button>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    'use strict';
+
+    var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbws0FfKtWvkcArK6-pmu45jO01M0cPOpif2Ya0nej8Vk1dPXNF0QOj5Q6e61kzdZgT3/exec';
+
+    var form    = document.getElementById('form-insc');
+    var btn     = document.getElementById('btn-enviar');
+    var btnText = document.getElementById('btn-text');
+    var spinner = document.getElementById('spinner');
+    var msg     = document.getElementById('msg-insc');
+    var modal   = document.getElementById('modal-confirmacion');
+
+    function generarID() {
+      return 'SUB-' + Date.now() + '-' + Math.floor(Math.random() * 9999);
+    }
+
+    function setLoading(on) {
+      btn.disabled  = on;
+      spinner.style.display = on ? 'block' : 'none';
+      btnText.style.display = on ? 'none' : 'flex';
+      btnText.style.alignItems = 'center';
+      btnText.style.gap = '9px';
+    }
+
+    function markInvalid(el) {
+      el.classList.add('invalid');
+      el.addEventListener('input', function () { el.classList.remove('invalid'); }, { once: true });
+    }
+
+    function validate() {
+      var ok = true;
+      ['nombre','apellido','email','telefono'].forEach(function (name) {
+        var el = form[name];
+        if (!el.value.trim() || (name === 'email' && !el.value.includes('@'))) {
+          markInvalid(el);
+          ok = false;
+        }
+      });
+      return ok;
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (btn.disabled) return;
+
+      if (!validate()) {
+        msg.style.color = '#e07070';
+        msg.textContent = '⚠️ Completá todos los campos obligatorios.';
+        return;
+      }
+
+      setLoading(true);
+      msg.style.color = 'rgba(255,255,255,.45)';
+      msg.textContent = 'Enviando inscripción…';
+
+      var fd = new FormData();
+      fd.append('unique_id',      generarID());
+      fd.append('nombre',         form.nombre.value.trim());
+      fd.append('apellido',       form.apellido.value.trim());
+      fd.append('email',          form.email.value.trim());
+      fd.append('telefono',       form.telefono.value.trim());
+      fd.append('comentarios',    form.comentarios.value.trim());
+      fd.append('Cursos',         'Power BI para Business Intelligence y Analítica de Datos');
+      fd.append('CantidadCursos', '1');
+      fd.append('Promoción',      'No');
+
+      fetch(APPS_SCRIPT_URL, { method: 'POST', body: fd, mode: 'no-cors' })
+        .then(function () {
+          msg.textContent = '';
+          form.reset();
+          modal.classList.add('show');
+        })
+        .catch(function (err) {
+          console.error(err);
+          msg.style.color = '#e07070';
+          msg.textContent = '❌ Error al enviar. Por favor intentá nuevamente.';
+        })
+        .finally(function () {
+          setLoading(false);
+        });
+    });
+
+    // Cerrar modal
+    document.getElementById('btn-cerrar-modal').addEventListener('click', function () {
+      modal.classList.remove('show');
+    });
+
+    modal.addEventListener('click', function (e) {
+      if (e.target === modal) modal.classList.remove('show');
+    });
+
+  })();
+  </script>
+
+</body>
+</html>

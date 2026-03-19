@@ -25,6 +25,8 @@
       --border:     rgba(255,255,255,0.12);
       --radius:     16px;
       --shadow:     0 20px 60px rgba(8,33,58,.45);
+      --wa-green:   #25D366;
+      --wa-dark:    #1fba58;
     }
 
     html { scroll-behavior: smooth; }
@@ -356,9 +358,9 @@
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(8,33,58,.75);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+      background: rgba(8,33,58,.82);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       z-index: 1000;
       display: none;
       place-items: center;
@@ -372,13 +374,13 @@
     .modal-box {
       background: linear-gradient(150deg, #0f3054, #183d62);
       border: 1px solid rgba(255,255,255,.15);
-      border-radius: 24px;
-      padding: 48px 40px 40px;
-      max-width: 420px;
+      border-radius: 28px;
+      padding: 48px 36px 40px;
+      max-width: 440px;
       width: 100%;
       text-align: center;
-      box-shadow: 0 30px 80px rgba(0,0,0,.5);
-      animation: popUp .3s cubic-bezier(.34,1.56,.64,1) both;
+      box-shadow: 0 30px 80px rgba(0,0,0,.6);
+      animation: popUp .35s cubic-bezier(.34,1.56,.64,1) both;
     }
 
     @keyframes popUp {
@@ -387,7 +389,7 @@
     }
 
     .modal-icon {
-      font-size: 3.5rem;
+      font-size: 3.8rem;
       margin-bottom: 16px;
       display: block;
       animation: bounce .6s ease .2s both;
@@ -395,52 +397,137 @@
 
     @keyframes bounce {
       from { transform: scale(0); opacity: 0; }
-      60%  { transform: scale(1.15); }
+      60%  { transform: scale(1.18); }
       to   { transform: scale(1); opacity: 1; }
     }
 
     .modal-title {
       font-family: 'Sora', sans-serif;
-      font-size: 1.55rem;
+      font-size: 1.6rem;
       font-weight: 800;
       color: var(--white);
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .modal-body {
       color: var(--muted);
       font-size: .95rem;
       line-height: 1.65;
-      margin-bottom: 30px;
+      margin-bottom: 8px;
     }
 
     .modal-body strong { color: var(--white); }
 
-    .btn-modal-close {
-      background: linear-gradient(135deg, #25D366, #1fba58);
+    /* ── INVITATION BOX ── */
+    .modal-invite {
+      background: rgba(37,211,102,.1);
+      border: 1px solid rgba(37,211,102,.28);
+      border-radius: 16px;
+      padding: 18px 20px;
+      margin: 20px 0 24px;
+    }
+
+    .modal-invite-text {
+      font-family: 'Sora', sans-serif;
+      font-size: .85rem;
+      font-weight: 700;
+      color: rgba(255,255,255,.85);
+      margin-bottom: 14px;
+      line-height: 1.5;
+    }
+
+    .modal-invite-text span {
+      color: #6fe89f;
+    }
+
+    /* ── MODAL BUTTONS ── */
+    .modal-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .btn-wa-group {
+      background: linear-gradient(135deg, #25D366 0%, #1aa84e 100%);
       color: white;
       border: none;
-      border-radius: 12px;
-      padding: 13px 28px;
+      border-radius: 14px;
+      padding: 15px 24px;
       font-family: 'Sora', sans-serif;
-      font-size: .95rem;
+      font-size: 1rem;
       font-weight: 700;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      transition: transform .15s, filter .15s;
-      box-shadow: 0 6px 20px rgba(37,211,102,.4);
+      justify-content: center;
+      gap: 9px;
+      transition: transform .15s, filter .15s, box-shadow .15s;
+      box-shadow: 0 8px 24px rgba(37,211,102,.4);
       text-decoration: none;
+      width: 100%;
     }
 
-    .btn-modal-close:hover { transform: translateY(-2px); filter: brightness(1.08); }
+    .btn-wa-group:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.08);
+      box-shadow: 0 12px 30px rgba(37,211,102,.5);
+    }
+
+    .btn-wa-group .wa-badge {
+      background: rgba(255,255,255,.2);
+      border-radius: 6px;
+      padding: 2px 8px;
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .btn-wa-contact {
+      background: rgba(37,211,102,.12);
+      color: #6fe89f;
+      border: 1.5px solid rgba(37,211,102,.3);
+      border-radius: 14px;
+      padding: 13px 24px;
+      font-family: 'Sora', sans-serif;
+      font-size: .9rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: transform .15s, background .2s, border-color .2s;
+      text-decoration: none;
+      width: 100%;
+    }
+
+    .btn-wa-contact:hover {
+      transform: translateY(-1px);
+      background: rgba(37,211,102,.2);
+      border-color: rgba(37,211,102,.5);
+    }
+
+    .btn-cerrar {
+      background: none;
+      border: none;
+      color: rgba(255,255,255,.3);
+      font-size: .82rem;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      margin-top: 18px;
+      display: block;
+      width: 100%;
+      transition: color .2s;
+    }
+
+    .btn-cerrar:hover { color: rgba(255,255,255,.55); }
 
     /* ── RESPONSIVE ── */
     @media (max-width: 500px) {
       .card { padding: 28px 20px 32px; }
       .form-row { grid-template-columns: 1fr; }
-      .modal-box { padding: 36px 24px 32px; }
+      .modal-box { padding: 36px 20px 30px; }
     }
   </style>
 </head>
@@ -535,61 +622,73 @@
       </form>
 
       <div class="card-footer" style="text-align:center;">
-    
-    <strong style="font-size:18px;">
-        ¿Querés formar parte del curso y recibir toda la información?
-    </strong><br><br>
+        <strong style="font-size:18px;">
+            ¿Querés formar parte del curso y recibir toda la información?
+        </strong><br><br>
+        <span style="font-size:15px;">
+            Unite directamente a nuestro grupo exclusivo de WhatsApp
+        </span><br><br>
+        <a href="https://wa.me/595983319027" 
+           target="_blank" 
+           rel="noopener"
+           style="display:inline-block;background-color:#25D366;color:white;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:bold;">
+            💬 Contactar por WhatsApp
+        </a><br><br>
 
-    <span style="font-size:15px;">
-        Unite directamente a nuestro grupo exclusivo de WhatsApp
-    </span><br><br>
-
-    <a href="https://chat.whatsapp.com/FX2GA5vVigMDsEPc2ISkxJ" 
-       target="_blank" 
-       rel="noopener"
-       style="display:inline-block;
-              background-color:#25D366;
-              color:white;
-              padding:12px 20px;
-              border-radius:8px;
-              text-decoration:none;
-              font-weight:bold;">
-        👉 Unirme al grupo de WhatsApp
-    </a><br><br>
-
-    <span style="font-size:13px; color:#555;">
-        También podés escribirnos al 
-        <a href="mailto:gausskish@gmail.com">correo electrónico</a>
-    </span><br><br>
-
-    <small style="color:#777;">
-        Cupos limitados – asegurá tu lugar con anticipación.<br>
-        © 2026 IGK - CICAPY 
-    </small>
-
-</div>
+        <small style="color:#777;">
+            Cupos limitados – asegurá tu lugar con anticipación.<br>
+            © 2026 IGK - CICAPY 
+        </small>
+      </div>
 
     </div>
   </div>
 
-  <!-- Modal de confirmación -->
+  <!-- ── MODAL DE CONFIRMACIÓN (NUEVO) ── -->
   <div class="modal-overlay" id="modal-confirmacion" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
     <div class="modal-box">
+
       <span class="modal-icon">🎉</span>
+
       <h2 class="modal-title" id="modal-titulo">¡Inscripción enviada!</h2>
+
       <p class="modal-body">
         Tu inscripción al curso de<br>
         <strong>Power BI para Business Intelligence</strong><br>
-        fue registrada correctamente.<br><br>
-        En breve recibirás confirmación por correo o WhatsApp. ¡Te esperamos!
+        fue registrada correctamente.
       </p>
-      <a href="https://wa.me/595983319027" target="_blank" rel="noopener" class="btn-modal-close">
-        💬 Contactar por WhatsApp
-      </a>
-      <br><br>
-      <button id="btn-cerrar-modal" style="background:none;border:none;color:rgba(255,255,255,.4);font-size:.85rem;cursor:pointer;font-family:'DM Sans',sans-serif;">
+
+      <!-- Invitación cordial al grupo -->
+      <div class="modal-invite">
+        <p class="modal-invite-text">
+          📲 ¡Te invitamos cordialmente a unirte a nuestro<br>
+          <span>grupo exclusivo de WhatsApp</span> del curso,<br>
+          donde recibirás toda la información y novedades.
+        </p>
+
+        <div class="modal-buttons">
+
+          <!-- Botón 1: Unirse al grupo -->
+          <a href="https://chat.whatsapp.com/FX2GA5vVigMDsEPc2ISkxJ"
+             target="_blank"
+             rel="noopener"
+             class="btn-wa-group">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+            Unirme al grupo del curso
+
+          </a>
+
+
+
+        </div>
+      </div>
+
+      <button id="btn-cerrar-modal" class="btn-cerrar">
         Cerrar ventana
       </button>
+
     </div>
   </div>
 

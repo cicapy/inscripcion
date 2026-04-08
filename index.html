@@ -3,789 +3,1913 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inscripción — Power BI para Business Intelligence</title>
+  <title>CICAPY – Instituto Técnico Superior · Análisis de Datos & Business Intelligence</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
+    /* ============================================
+       DESIGN SYSTEM
+    ============================================ */
     :root {
-      --navy-deep:  #08213a;
-      --navy:       #0f3054;
-      --blue:       #1a5080;
-      --blue-mid:   #2176ae;
-      --gold:       #f5c842;
-      --gold-light: #fde98a;
-      --white:      #ffffff;
-      --off-white:  #f2f6fb;
-      --muted:      #94afc8;
-      --ink:        #1a2e40;
-      --border:     rgba(255,255,255,0.12);
-      --radius:     16px;
-      --shadow:     0 20px 60px rgba(8,33,58,.45);
-      --wa-green:   #25D366;
-      --wa-dark:    #1fba58;
+      --navy-900: #060E1A;
+      --navy-800: #0A1628;
+      --navy-700: #0D1F3C;
+      --navy-600: #112746;
+      --blue-700: #1D4ED8;
+      --blue-600: #2563EB;
+      --blue-500: #3B82F6;
+      --blue-400: #60A5FA;
+      --blue-300: #93C5FD;
+      --blue-100: #DBEAFE;
+      --blue-50:  #EFF6FF;
+      --green-700: #15803D;
+      --green-600: #16A34A;
+      --green-500: #22C55E;
+      --slate-900: #0F172A;
+      --slate-800: #1E293B;
+      --slate-700: #334155;
+      --slate-600: #475569;
+      --slate-500: #64748B;
+      --slate-400: #94A3B8;
+      --slate-300: #CBD5E1;
+      --slate-200: #E2E8F0;
+      --slate-100: #F1F5F9;
+      --slate-50:  #F8FAFC;
+      --white: #FFFFFF;
+      --font-display: 'Sora', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.07), 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.08), 0 2px 6px rgba(0,0,0,0.04);
+      --shadow-lg: 0 10px 40px rgba(0,0,0,0.10), 0 4px 12px rgba(0,0,0,0.06);
+      --shadow-xl: 0 20px 60px rgba(0,0,0,0.12), 0 8px 20px rgba(0,0,0,0.08);
+      --shadow-blue: 0 8px 30px rgba(37,99,235,0.22);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
+      --radius-full: 9999px;
+      --ease: cubic-bezier(0.4,0,0.2,1);
+      --ease-out: cubic-bezier(0,0,0.2,1);
     }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body { font-family: var(--font-body); color: var(--slate-800); background: var(--white); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    img { max-width: 100%; height: auto; display: block; }
+    a { text-decoration: none; color: inherit; }
+    button { cursor: pointer; font-family: var(--font-body); }
+    ul { list-style: none; }
 
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--navy-deep);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 0;
-      overflow-x: hidden;
+    /* ============================================
+       NAVBAR
+    ============================================ */
+    .navbar {
+      position: sticky; top: 0; z-index: 1000;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--slate-200);
+      transition: box-shadow 0.25s var(--ease);
     }
-
-    /* ── FONDO ANIMADO ── */
-    .bg-layer {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      background:
-        radial-gradient(ellipse 80% 60% at 10% 20%, rgba(33,118,174,.25) 0%, transparent 60%),
-        radial-gradient(ellipse 60% 50% at 90% 80%, rgba(245,200,66,.08) 0%, transparent 55%),
-        linear-gradient(160deg, #08213a 0%, #0f3054 50%, #0a1e31 100%);
+    .navbar.scrolled { box-shadow: var(--shadow-md); }
+    .navbar-inner {
+      max-width: 1280px; margin: 0 auto; padding: 0 24px;
+      display: flex; align-items: center; gap: 8px; height: 76px;
+    }
+    .navbar-brand { display: flex; align-items: center; gap: 12px; margin-right: 16px; flex-shrink: 0; }
+    .navbar-logo {
+      width: 48px; height: 48px;
+      background: transparent;
+      border-radius: 10px; display: grid; place-items: center;
       overflow: hidden;
     }
+    .navbar-logo img,
+    .footer-logo img {
+      width: 100%; height: 100%; object-fit: contain; display: block;
+    }
+    .navbar-name-block { line-height: 1.15; }
+    .navbar-name { font-family: var(--font-display); font-weight: 700; font-size: 17px; color: var(--slate-900); display: block; }
+    .navbar-sub { font-size: 10.5px; font-weight: 400; color: var(--slate-500); display: block; }
+    .nav-tabs { display: flex; align-items: center; gap: 2px; overflow-x: auto; scrollbar-width: none; flex: 1; }
+    .nav-tabs::-webkit-scrollbar { display: none; }
+    .nav-tab {
+      padding: 7px 13px; border-radius: var(--radius-sm);
+      font-size: 13.5px; font-weight: 500; color: var(--slate-600);
+      white-space: nowrap; cursor: pointer; border: none; background: transparent;
+      transition: all 0.15s var(--ease); user-select: none; position: relative;
+    }
+    .nav-tab:hover { background: var(--blue-50); color: var(--blue-600); }
+    .nav-tab.active { background: var(--blue-50); color: var(--blue-700); font-weight: 600; }
+    .nav-tab.active::after {
+      content: ''; position: absolute; bottom: -1px; left: 13px; right: 13px;
+      height: 2px; background: var(--blue-600); border-radius: 2px 2px 0 0;
+    }
+    .nav-cta {
+      margin-left: 8px; padding: 8px 18px; background: var(--green-600);
+      color: white; border-radius: var(--radius-full); font-size: 13px; font-weight: 600;
+      border: none; transition: all 0.15s var(--ease); white-space: nowrap; flex-shrink: 0;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .nav-cta:hover { background: var(--green-700); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(22,163,74,0.30); }
+    .nav-mobile-btn { display: none; flex-direction: column; gap: 5px; background: none; border: none; padding: 8px; }
+    .nav-mobile-btn span { display: block; width: 22px; height: 2px; background: var(--slate-700); border-radius: 2px; transition: all 0.25s var(--ease); }
 
-    .bg-layer::before {
-      content: '';
-      position: absolute;
-      inset: 0;
+    /* ============================================
+       TAB SYSTEM
+    ============================================ */
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* ============================================
+       HERO
+    ============================================ */
+    .hero-section {
+      background: var(--navy-800); position: relative; overflow: hidden;
+      padding: 90px 24px 80px;
+    }
+    .hero-section::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
       background-image:
-        repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(255,255,255,.025) 40px),
-        repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255,255,255,.025) 40px);
-      background-size: 40px 40px;
+        radial-gradient(circle at 15% 55%, rgba(37,99,235,0.18) 0%, transparent 50%),
+        radial-gradient(circle at 85% 20%, rgba(59,130,246,0.10) 0%, transparent 40%),
+        linear-gradient(rgba(59,130,246,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(59,130,246,0.04) 1px, transparent 1px);
+      background-size: auto, auto, 60px 60px, 60px 60px;
     }
-
-    .orb {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(80px);
-      opacity: .18;
-      animation: drift 14s ease-in-out infinite alternate;
+    .hero-section::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+      height: 60px; background: linear-gradient(to top, var(--white), transparent);
     }
-    .orb-1 { width: 500px; height: 500px; background: var(--blue-mid); top: -100px; left: -150px; animation-delay: 0s; }
-    .orb-2 { width: 350px; height: 350px; background: var(--gold); top: 60%; right: -80px; animation-delay: -5s; }
-    .orb-3 { width: 250px; height: 250px; background: #1a90d0; bottom: 80px; left: 30%; animation-delay: -10s; }
-
-    @keyframes drift {
-      from { transform: translate(0, 0) scale(1); }
-      to   { transform: translate(30px, 20px) scale(1.07); }
+    .hero-inner {
+      max-width: 1280px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;
+      position: relative; z-index: 1;
     }
-
-    /* ── WRAPPER ── */
-    .wrapper {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      max-width: 640px;
-      padding: 40px 20px 60px;
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(37,99,235,0.15); border: 1px solid rgba(59,130,246,0.28);
+      color: var(--blue-400); padding: 6px 14px; border-radius: var(--radius-full);
+      font-size: 12px; font-weight: 600; letter-spacing: 0.3px; margin-bottom: 20px;
     }
-
-    /* ── LOGO BADGE ── */
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      justify-content: center;
-      margin-bottom: 36px;
-      animation: fadeDown .6s ease both;
+    .hero-dot { width: 7px; height: 7px; background: var(--blue-400); border-radius: 50%; animation: dot-pulse 2s infinite; }
+    @keyframes dot-pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:0.4; transform:scale(0.65); } }
+    .hero-title {
+      font-family: var(--font-display); font-size: clamp(30px,4.2vw,54px);
+      font-weight: 800; line-height: 1.07; color: var(--white);
+      letter-spacing: -0.03em; margin-bottom: 20px;
     }
-
-    .brand-icon {
-      width: 44px; height: 44px;
-      background: linear-gradient(135deg, var(--blue-mid), #0e6fc0);
-      border-radius: 12px;
-      display: grid;
-      place-items: center;
-      box-shadow: 0 4px 16px rgba(33,118,174,.5);
+    .hero-title-accent {
+      background: linear-gradient(135deg, #60A5FA 0%, #38BDF8 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     }
-
-    .brand-icon svg { width: 24px; height: 24px; fill: white; }
-
-    .brand-name {
-      font-family: 'Sora', sans-serif;
-      font-weight: 800;
-      font-size: 1.15rem;
-      color: var(--white);
-      letter-spacing: .03em;
+    .hero-subtitle { font-size: clamp(14px,1.6vw,17px); color: rgba(255,255,255,0.62); line-height: 1.7; margin-bottom: 36px; max-width: 500px; }
+    .hero-cta-group { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px;
+      border-radius: var(--radius-full); font-size: 14.5px; font-weight: 600;
+      border: none; cursor: pointer; transition: all 0.2s var(--ease); white-space: nowrap;
     }
+    .btn-primary { background: var(--blue-600); color: white; box-shadow: var(--shadow-blue); }
+    .btn-primary:hover { background: var(--blue-700); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(37,99,235,0.35); }
+    .btn-green { background: var(--green-600); color: white; }
+    .btn-green:hover { background: var(--green-700); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(22,163,74,0.30); }
+    .btn-gold { background: #F59E0B; color: var(--navy-900); font-weight: 700; box-shadow: var(--shadow-gold); }
+    .btn-gold:hover { background: #FBBF24; transform: translateY(-2px); box-shadow: 0 12px 40px rgba(245,158,11,0.35); }
+    .btn-outline { background: transparent; color: white; border: 1.5px solid rgba(255,255,255,0.25); }
+    .btn-outline:hover { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.40); }
+    .btn-outline-blue { background: transparent; color: var(--blue-600); border: 1.5px solid var(--blue-200); }
+    .btn-outline-blue:hover { background: var(--blue-50); }
 
-    .brand-name span { color: var(--gold); }
-
-    /* ── CARD ── */
-    .card {
-      background: rgba(255,255,255,.05);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      padding: 40px 36px 44px;
-      box-shadow: var(--shadow);
-      animation: fadeUp .7s ease both;
+    /* HERO VISUAL */
+    .hero-visual { position: relative; }
+    .hero-mockup {
+      background: rgba(255,255,255,0.055); border: 1px solid rgba(255,255,255,0.10);
+      border-radius: var(--radius-xl); padding: 26px; backdrop-filter: blur(10px);
     }
-
-    @keyframes fadeDown {
-      from { opacity: 0; transform: translateY(-18px); }
-      to   { opacity: 1; transform: translateY(0); }
+    .mock-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+    .mock-label { font-family: var(--font-display); font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 1px; }
+    .mock-live { background: rgba(22,163,74,0.22); color: #4ADE80; font-size: 10.5px; font-weight: 700; padding: 3px 10px; border-radius: var(--radius-full); border: 1px solid rgba(74,222,128,0.28); letter-spacing: 0.5px; }
+    .mock-chart { display: flex; align-items: flex-end; gap: 7px; height: 90px; margin-bottom: 16px; }
+    .mock-bar { flex: 1; border-radius: 5px 5px 0 0; animation: bar-rise 1.2s var(--ease-out) both; transform-origin: bottom; }
+    @keyframes bar-rise { from { transform: scaleY(0); opacity: 0; } to { transform: scaleY(1); opacity: 1; } }
+    .mock-bar:nth-child(1) { height: 55%; background: linear-gradient(to top, var(--blue-700), var(--blue-500)); animation-delay: 0.1s; }
+    .mock-bar:nth-child(2) { height: 78%; background: linear-gradient(to top, var(--blue-700), var(--blue-500)); animation-delay: 0.2s; }
+    .mock-bar:nth-child(3) { height: 42%; background: linear-gradient(to top, var(--blue-700), var(--blue-500)); animation-delay: 0.3s; }
+    .mock-bar:nth-child(4) { height: 92%; background: linear-gradient(to top, var(--green-700), var(--green-500)); animation-delay: 0.4s; }
+    .mock-bar:nth-child(5) { height: 68%; background: linear-gradient(to top, var(--blue-700), var(--blue-500)); animation-delay: 0.5s; }
+    .mock-bar:nth-child(6) { height: 83%; background: linear-gradient(to top, var(--blue-700), var(--blue-500)); animation-delay: 0.6s; }
+    .mock-bar:nth-child(7) { height: 58%; background: linear-gradient(to top, var(--blue-700), var(--blue-500)); animation-delay: 0.7s; }
+    .mock-kpis { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; }
+    .mock-kpi { background: rgba(255,255,255,0.05); border-radius: 8px; padding: 9px; text-align: center; }
+    .mock-kpi-v { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: white; }
+    .mock-kpi-l { font-size: 10px; color: rgba(255,255,255,0.40); margin-top: 2px; }
+    .hero-float-1, .hero-float-2 {
+      position: absolute; background: white; border-radius: var(--radius-md);
+      padding: 9px 14px; box-shadow: var(--shadow-xl); font-size: 12px;
+      font-weight: 600; color: var(--slate-700); display: flex; align-items: center; gap: 8px;
     }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(28px); }
-      to   { opacity: 1; transform: translateY(0); }
+    .hero-float-1 { top: -18px; right: -8px; animation: float-a 3.5s ease-in-out infinite; }
+    .hero-float-2 { bottom: -18px; left: -8px; animation: float-b 4s ease-in-out infinite; }
+    @keyframes float-a { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-9px); } }
+    @keyframes float-b { 0%,100% { transform:translateY(0); } 50% { transform:translateY(8px); } }
+
+    /* ============================================
+       STATS BAR
+    ============================================ */
+    .stats-bar { background: var(--slate-900); padding: 28px 24px; }
+    .stats-inner { max-width: 1280px; margin: 0 auto; display: flex; justify-content: space-around; flex-wrap: wrap; gap: 28px; }
+    .stat-item { text-align: center; }
+    .stat-number { font-family: var(--font-display); font-size: 30px; font-weight: 800; color: white; line-height: 1; }
+    .stat-number span { color: var(--blue-400); }
+    .stat-label { font-size: 13px; color: var(--slate-400); margin-top: 5px; }
+
+    /* ============================================
+       SECTIONS
+    ============================================ */
+    .section { padding: 80px 24px; }
+    .section-alt { background: var(--slate-50); }
+    .section-dark { background: var(--navy-800); }
+    .container { max-width: 1280px; margin: 0 auto; }
+    .section-label { display: inline-block; font-family: var(--font-display); font-size: 11px; font-weight: 700; color: var(--blue-600); text-transform: uppercase; letter-spacing: 1.8px; margin-bottom: 12px; }
+    .section-label-white { color: var(--blue-300); }
+    .section-title { font-family: var(--font-display); font-size: clamp(24px,3.2vw,38px); font-weight: 800; color: var(--slate-900); line-height: 1.14; letter-spacing: -0.02em; margin-bottom: 14px; }
+    .section-title-white { color: white; }
+    .section-subtitle { font-size: 16.5px; color: var(--slate-500); line-height: 1.68; max-width: 560px; }
+    .section-subtitle-white { color: rgba(255,255,255,0.58); }
+    .section-head { margin-bottom: 52px; }
+    .section-head-center { text-align: center; }
+    .section-head-center .section-subtitle { margin: 0 auto; }
+
+    /* ============================================
+       BENEFITS
+    ============================================ */
+    .benefits-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+    .benefit-card {
+      background: white; border: 1px solid var(--slate-200); border-radius: var(--radius-lg);
+      padding: 28px; transition: all 0.25s var(--ease); position: relative; overflow: hidden;
     }
-
-    /* ── HEADER CARD ── */
-    .course-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(245,200,66,.14);
-      border: 1px solid rgba(245,200,66,.3);
-      color: var(--gold);
-      font-family: 'Sora', sans-serif;
-      font-size: .72rem;
-      font-weight: 700;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      padding: 5px 12px;
-      border-radius: 999px;
-      margin-bottom: 16px;
+    .benefit-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--blue-600), var(--blue-400));
+      transform: scaleX(0); transition: transform 0.25s var(--ease); transform-origin: left;
     }
+    .benefit-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); border-color: var(--blue-100); }
+    .benefit-card:hover::before { transform: scaleX(1); }
+    .benefit-icon { width: 48px; height: 48px; background: var(--blue-50); border-radius: var(--radius-md); display: grid; place-items: center; font-size: 22px; margin-bottom: 16px; }
+    .benefit-title { font-family: var(--font-display); font-size: 15.5px; font-weight: 700; color: var(--slate-900); margin-bottom: 8px; }
+    .benefit-desc { font-size: 14px; color: var(--slate-500); line-height: 1.62; }
 
-    .course-badge::before {
-      content: '';
-      width: 6px; height: 6px;
-      background: var(--gold);
-      border-radius: 50%;
-      display: inline-block;
-      animation: pulse 1.6s ease-in-out infinite;
+    /* ============================================
+       ABOUT
+    ============================================ */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+    .about-text p { font-size: 16px; color: var(--slate-600); line-height: 1.78; margin-bottom: 16px; }
+    .about-resolution {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--blue-50); border: 1px solid var(--blue-100);
+      color: var(--blue-700); padding: 8px 16px; border-radius: var(--radius-full);
+      font-size: 13px; font-weight: 600; margin-top: 4px;
     }
+    .mv-stack { display: flex; flex-direction: column; gap: 16px; }
+    .mv-card { background: white; border: 1px solid var(--slate-200); border-radius: var(--radius-lg); padding: 24px 24px 24px 28px; position: relative; overflow: hidden; }
+    .mv-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; }
+    .mv-card.mission::before { background: linear-gradient(to bottom, var(--blue-600), var(--blue-400)); }
+    .mv-card.vision::before { background: linear-gradient(to bottom, var(--green-600), var(--green-500)); }
+    .mv-type { font-family: var(--font-display); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 8px; }
+    .mv-card.mission .mv-type { color: var(--blue-600); }
+    .mv-card.vision .mv-type { color: var(--green-600); }
+    .mv-text { font-size: 14.5px; color: var(--slate-600); line-height: 1.68; }
 
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50%       { opacity: .4; transform: scale(.7); }
+    /* ============================================
+       COURSES
+    ============================================ */
+    .courses-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+    .course-card {
+      background: white; border: 1px solid var(--slate-200); border-radius: var(--radius-xl);
+      overflow: hidden; transition: all 0.25s var(--ease); display: flex; flex-direction: column;
     }
+    .course-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-xl); }
+    .course-top-bar { height: 4px; }
+    .course-card-pbi .course-top-bar { background: linear-gradient(90deg, #F59E0B, #FBBF24); }
+    .course-card-excel .course-top-bar { background: linear-gradient(90deg, #16A34A, #22C55E); }
+    .course-card-sql .course-top-bar { background: linear-gradient(90deg, #6366F1, #818CF8); }
+    .course-card-verano .course-top-bar { background: linear-gradient(90deg, #0EA5E9, #38BDF8); }
+    .course-body { padding: 24px; flex: 1; display: flex; flex-direction: column; }
+    .course-icon { font-size: 30px; margin-bottom: 14px; }
+    .course-name { font-family: var(--font-display); font-size: 19px; font-weight: 800; color: var(--slate-900); margin-bottom: 8px; line-height: 1.2; }
+    .course-desc { font-size: 13.5px; color: var(--slate-500); line-height: 1.62; margin-bottom: 16px; flex: 1; }
+    .course-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+    .tag { padding: 4px 10px; border-radius: var(--radius-full); font-size: 11px; font-weight: 600; }
+    .tag-blue { background: var(--blue-50); color: var(--blue-700); }
+    .tag-green { background: #DCFCE7; color: #166534; }
+    .tag-orange { background: #FFF7ED; color: #9A3412; }
+    .tag-purple { background: #F5F3FF; color: #5B21B6; }
+    .tag-teal { background: #F0FDFA; color: #0F766E; }
+    .tag-sky { background: #F0F9FF; color: #0369A1; }
+    .course-meta { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 18px; }
+    .meta-item { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--slate-500); font-weight: 500; }
+    .btn-full { width: 100%; justify-content: center; }
+    .btn-sm { padding: 10px 18px; font-size: 13px; }
 
-    .card-title {
-      font-family: 'Sora', sans-serif;
-      font-size: clamp(1.35rem, 3.5vw, 1.75rem);
-      font-weight: 800;
-      color: var(--white);
-      line-height: 1.2;
-      margin-bottom: 10px;
+    /* ============================================
+       SERVICES
+    ============================================ */
+    .services-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 48px; }
+    .service-card {
+      background: rgba(255,255,255,0.055); border: 1px solid rgba(255,255,255,0.10);
+      border-radius: var(--radius-lg); padding: 28px; transition: all 0.25s var(--ease);
     }
+    .service-card:hover { background: rgba(255,255,255,0.09); transform: translateY(-3px); }
+    .service-icon { font-size: 28px; margin-bottom: 14px; }
+    .service-title { font-family: var(--font-display); font-size: 17px; font-weight: 700; color: white; margin-bottom: 10px; }
+    .service-desc { font-size: 14px; color: rgba(255,255,255,0.58); line-height: 1.68; }
+    .service-list { margin-top: 12px; }
+    .service-list li { display: flex; gap: 8px; font-size: 13.5px; color: rgba(255,255,255,0.60); line-height: 1.55; margin-bottom: 8px; }
+    .service-list li::before { content: '→'; color: var(--blue-400); flex-shrink: 0; font-weight: 700; }
 
-    .card-title span { color: var(--gold); }
-
-    .card-sub {
-      font-size: .95rem;
-      color: var(--muted);
-      line-height: 1.6;
-      margin-bottom: 28px;
+    /* ============================================
+       INSTRUCTOR
+    ============================================ */
+    .instructor-card {
+      background: white; border: 1px solid var(--slate-200); border-radius: var(--radius-xl);
+      overflow: hidden; display: grid; grid-template-columns: 300px 1fr; box-shadow: var(--shadow-lg);
     }
-
-    .divider {
-      height: 1px;
-      background: var(--border);
-      margin-bottom: 28px;
+    .instructor-left {
+      background: linear-gradient(180deg, var(--navy-700) 0%, var(--navy-900) 100%);
+      padding: 44px 32px; display: flex; flex-direction: column; align-items: center; text-align: center;
     }
-
-    /* ── PILLS INFO ── */
-    .pills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 28px;
+    .instructor-photo {
+      width: 130px; height: 130px; border-radius: 50%; object-fit: cover;
+      border: 4px solid rgba(255,255,255,0.14); margin-bottom: 18px;
     }
-
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      font-size: .78rem;
-      font-weight: 600;
-      color: rgba(255,255,255,.75);
-      background: rgba(255,255,255,.07);
-      border: 1px solid rgba(255,255,255,.1);
-      padding: 5px 11px;
-      border-radius: 999px;
+    .instructor-avatar-placeholder {
+      width: 130px; height: 130px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue-600), var(--blue-400));
+      display: grid; place-items: center; font-size: 52px;
+      border: 4px solid rgba(255,255,255,0.14); margin-bottom: 18px;
     }
-
-    .pill-icon { font-size: .85em; }
-
-    /* ── FORM ── */
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      margin-bottom: 14px;
+    .instructor-name { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: white; margin-bottom: 4px; }
+    .instructor-role { font-size: 12.5px; color: var(--blue-400); font-weight: 500; margin-bottom: 20px; }
+    .inst-social { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+    .inst-social-btn {
+      display: inline-flex; align-items: center; gap: 5px; padding: 6px 12px;
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+      border-radius: var(--radius-full); color: rgba(255,255,255,0.70); font-size: 11.5px; font-weight: 500;
+      transition: all 0.15s var(--ease);
     }
+    .inst-social-btn:hover { background: rgba(255,255,255,0.14); color: white; }
+    .instructor-right { padding: 44px 40px; }
+    .instructor-right .section-label { display: block; margin-bottom: 6px; }
+    .instructor-right h2 { font-family: var(--font-display); font-size: 22px; font-weight: 800; color: var(--slate-900); margin-bottom: 14px; }
+    .instructor-right p { font-size: 15px; color: var(--slate-600); line-height: 1.72; margin-bottom: 14px; }
+    .cred-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+    .cred-item { background: var(--slate-50); border-radius: var(--radius-md); padding: 14px; }
+    .cred-label { font-size: 10px; font-weight: 700; color: var(--blue-600); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 5px; }
+    .cred-value { font-size: 13.5px; color: var(--slate-700); font-weight: 500; line-height: 1.4; }
+    .exp-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .exp-chip { background: var(--blue-50); border: 1px solid var(--blue-100); color: var(--blue-700); padding: 4px 12px; border-radius: var(--radius-full); font-size: 12px; font-weight: 500; }
 
-    .form-full { margin-bottom: 14px; }
-
-    .field {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
+    /* ============================================
+       TESTIMONIALS
+    ============================================ */
+    .testimonials-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+    .testimonial-card {
+      background: white; border: 1px solid var(--slate-200); border-radius: var(--radius-lg);
+      padding: 28px; transition: all 0.2s var(--ease);
     }
+    .testimonial-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
+    .t-stars { color: #F59E0B; font-size: 15px; letter-spacing: 2px; margin-bottom: 14px; }
+    .t-text { font-size: 14.5px; color: var(--slate-600); line-height: 1.72; margin-bottom: 20px; font-style: italic; }
+    .t-author { display: flex; align-items: center; gap: 12px; }
+    .t-avatar { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; font-size: 14px; font-weight: 700; color: white; flex-shrink: 0; }
+    .t-name { font-weight: 600; font-size: 13.5px; color: var(--slate-800); }
+    .t-role { font-size: 12px; color: var(--slate-500); }
 
-    .field label {
-      font-size: .78rem;
-      font-weight: 600;
-      color: rgba(255,255,255,.55);
-      letter-spacing: .05em;
-      text-transform: uppercase;
+    /* ============================================
+       DASHBOARDS / GALLERY
+    ============================================ */
+    .dashboards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .dashboard-card {
+      background: white; border: 1px solid var(--slate-200); border-radius: var(--radius-lg);
+      overflow: hidden; transition: all 0.2s var(--ease);
     }
+    .dashboard-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
+    .video-wrap { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; }
+    .video-wrap iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+    .dash-body { padding: 14px 18px; }
+    .dash-body h4 { font-family: var(--font-display); font-size: 14px; font-weight: 700; color: var(--slate-800); margin-bottom: 3px; }
+    .dash-body p { font-size: 12.5px; color: var(--slate-500); }
 
-    .field input,
-    .field textarea {
-      background: rgba(255,255,255,.07);
-      border: 1.5px solid rgba(255,255,255,.12);
-      border-radius: 12px;
-      padding: 13px 16px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: .97rem;
-      color: var(--white);
-      outline: none;
-      transition: border-color .2s, background .2s, box-shadow .2s;
-      width: 100%;
+    /* ============================================
+       CTA SECTION
+    ============================================ */
+    .cta-section {
+      background: linear-gradient(135deg, var(--navy-700) 0%, var(--blue-700) 100%);
+      padding: 96px 24px; position: relative; overflow: hidden;
     }
-
-    .field input::placeholder,
-    .field textarea::placeholder { color: rgba(255,255,255,.28); }
-
-    .field input:focus,
-    .field textarea:focus {
-      border-color: var(--blue-mid);
-      background: rgba(33,118,174,.12);
-      box-shadow: 0 0 0 4px rgba(33,118,174,.18);
+    .cta-section::before {
+      content: ''; position: absolute; inset: 0;
+      background-image:
+        radial-gradient(circle at 75% 50%, rgba(59,130,246,0.14) 0%, transparent 50%),
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: auto, 80px 80px, 80px 80px;
     }
+    .cta-inner { max-width: 680px; margin: 0 auto; text-align: center; position: relative; z-index: 1; }
+    .cta-title { font-family: var(--font-display); font-size: clamp(26px,3.8vw,44px); font-weight: 800; color: white; line-height: 1.1; letter-spacing: -0.025em; margin-bottom: 14px; }
+    .cta-sub { font-size: 16.5px; color: rgba(255,255,255,0.62); line-height: 1.65; margin-bottom: 36px; }
+    .cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 
-    .field input.invalid,
-    .field textarea.invalid {
-      border-color: #e05a5a;
-      box-shadow: 0 0 0 4px rgba(224,90,90,.18);
+    /* ============================================
+       FOOTER
+    ============================================ */
+    .footer { background: var(--slate-900); padding: 60px 24px 28px; }
+    .footer-grid { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 2.2fr 1fr 1fr 1fr; gap: 44px; margin-bottom: 44px; }
+    .footer-brand { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+    .footer-logo { width: 36px; height: 36px; background: transparent; border-radius: 9px; display: grid; place-items: center; overflow: hidden; }
+    .footer-brand-name { font-family: var(--font-display); font-size: 15px; font-weight: 700; color: white; display: block; }
+    .footer-brand-sub { font-size: 10px; color: var(--slate-500); display: block; }
+    .footer-tagline { font-size: 13.5px; color: var(--slate-400); line-height: 1.65; margin-bottom: 20px; }
+    .footer-contact li { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--slate-400); margin-bottom: 9px; }
+    .footer-contact a { color: var(--blue-400); transition: color 0.15s; }
+    .footer-contact a:hover { color: var(--blue-300); }
+    .footer-col-title { font-family: var(--font-display); font-size: 12px; font-weight: 700; color: white; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+    .footer-link { display: block; font-size: 13.5px; color: var(--slate-400); margin-bottom: 10px; transition: color 0.15s; cursor: pointer; }
+    .footer-link:hover { color: var(--blue-400); }
+    .footer-bottom { max-width: 1280px; margin: 0 auto; border-top: 1px solid var(--slate-800); padding-top: 26px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+    .footer-bottom-text { font-size: 12.5px; color: var(--slate-500); }
+
+    /* ============================================
+       INNER COURSE PAGE HERO
+    ============================================ */
+    .inner-hero { background: linear-gradient(135deg, var(--navy-700), var(--navy-900)); padding: 56px 24px; }
+    .inner-hero-inner { max-width: 1280px; margin: 0 auto; }
+    .inner-badge {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: rgba(37,99,235,0.15); border: 1px solid rgba(59,130,246,0.28);
+      color: var(--blue-400); padding: 5px 13px; border-radius: var(--radius-full);
+      font-size: 11.5px; font-weight: 600; margin-bottom: 14px;
     }
+    .inner-title { font-family: var(--font-display); font-size: clamp(24px,3.8vw,42px); font-weight: 800; color: white; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .inner-sub { font-size: 15.5px; color: rgba(255,255,255,0.60); max-width: 640px; line-height: 1.65; margin-bottom: 22px; }
+    .inner-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+    .inner-tag { background: rgba(59,130,246,0.14); border: 1px solid rgba(59,130,246,0.25); color: var(--blue-300); padding: 5px 13px; border-radius: var(--radius-full); font-size: 12px; font-weight: 600; }
 
-    .field textarea {
-      resize: vertical;
-      min-height: 110px;
-      line-height: 1.55;
+    /* ============================================
+       INNER CONTENT LAYOUT
+    ============================================ */
+    .inner-content { max-width: 1280px; margin: 0 auto; padding: 48px 24px 64px; }
+    .inner-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; margin-bottom: 36px; }
+    .inner-card {
+      background: white; border: 1px solid var(--slate-200); border-radius: var(--radius-lg);
+      padding: 26px; box-shadow: var(--shadow-sm);
     }
+    .inner-card h2 { font-family: var(--font-display); font-size: 17px; font-weight: 700; color: var(--slate-900); margin-bottom: 14px; }
+    .inner-card-list { display: flex; flex-direction: column; gap: 9px; }
+    .inner-card-list li { display: flex; gap: 9px; font-size: 14px; color: var(--slate-600); line-height: 1.55; }
+    .inner-card-list li::before { content: '✓'; color: var(--green-600); font-weight: 700; flex-shrink: 0; }
 
-    /* ── SUBMIT BUTTON ── */
+    /* Timeline */
+    .timeline { display: flex; flex-direction: column; gap: 12px; }
+    .timeline-step {
+      display: flex; gap: 16px; background: white; border: 1px solid var(--slate-200);
+      border-radius: var(--radius-md); padding: 16px 20px; transition: all 0.15s var(--ease);
+    }
+    .timeline-step:hover { box-shadow: var(--shadow-sm); border-color: var(--blue-100); }
+    .t-num { width: 32px; height: 32px; background: var(--blue-600); color: white; border-radius: 50%; display: grid; place-items: center; font-family: var(--font-display); font-size: 13px; font-weight: 700; flex-shrink: 0; }
+    .t-body h4 { font-family: var(--font-display); font-size: 14.5px; font-weight: 700; color: var(--slate-800); margin-bottom: 5px; }
+    .t-body p { font-size: 13.5px; color: var(--slate-500); line-height: 1.55; }
+    .t-pills { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 6px; }
+    .t-pill { background: var(--blue-50); color: var(--blue-700); padding: 2px 9px; border-radius: var(--radius-full); font-size: 11px; font-weight: 600; border: 1px solid var(--blue-100); }
+    .t-pill-green { background: #DCFCE7; color: #166534; border-color: #BBF7D0; }
+    .t-pill-purple { background: #F5F3FF; color: #5B21B6; border-color: #DDD6FE; }
+    .t-body ul { margin: 6px 0 0 16px; list-style: disc; }
+    .t-body li { font-size: 13.5px; color: var(--slate-500); line-height: 1.55; margin-bottom: 3px; list-style: disc; }
+    code { background: var(--slate-100); padding: 2px 6px; border-radius: 5px; font-size: 0.88em; font-family: 'Courier New', monospace; color: var(--blue-700); }
+
+    /* Form */
+    .form-wrap { max-width: 620px; }
+    .form-card { background: white; border: 1px solid var(--slate-200); border-radius: var(--radius-xl); padding: 36px; box-shadow: var(--shadow-lg); }
+    .form-title { font-family: var(--font-display); font-size: 21px; font-weight: 800; color: var(--slate-900); text-align: center; margin-bottom: 5px; }
+    .form-subtitle { font-size: 14px; color: var(--slate-500); text-align: center; margin-bottom: 26px; line-height: 1.5; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+    .form-group { margin-bottom: 12px; }
+    .form-input {
+      width: 100%; padding: 11px 14px; border: 1.5px solid var(--slate-200);
+      border-radius: var(--radius-sm); font-family: var(--font-body); font-size: 14px;
+      color: var(--slate-800); background: white; transition: all 0.15s var(--ease); outline: none;
+    }
+    .form-input:focus { border-color: var(--blue-500); box-shadow: 0 0 0 3px rgba(37,99,235,0.09); }
+    textarea.form-input { resize: vertical; min-height: 96px; }
     .btn-submit {
-      width: 100%;
-      padding: 16px 20px;
-      background: linear-gradient(135deg, var(--blue-mid) 0%, #0e6fc0 100%);
-      color: var(--white);
-      border: none;
-      border-radius: 14px;
-      font-family: 'Sora', sans-serif;
-      font-size: 1rem;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 9px;
-      transition: transform .15s, box-shadow .15s, filter .15s;
-      box-shadow: 0 8px 28px rgba(33,118,174,.45);
-      margin-top: 8px;
+      width: 100%; padding: 13px; background: var(--green-600); color: white;
+      border: none; border-radius: var(--radius-sm); font-size: 15px; font-weight: 700;
+      cursor: pointer; transition: all 0.15s var(--ease); margin-top: 4px;
     }
+    .btn-submit:hover { background: var(--green-700); }
+    .btn-submit:disabled { opacity: 0.65; cursor: not-allowed; }
+    #msg-insc { text-align: center; min-height: 20px; font-size: 13px; font-weight: 600; margin-top: 8px; }
 
-    .btn-submit:hover:not(:disabled) {
-      transform: translateY(-2px);
-      box-shadow: 0 14px 36px rgba(33,118,174,.55);
-      filter: brightness(1.08);
+    /* Payment */
+    .payment-card { background: var(--slate-50); border: 1px solid var(--slate-200); border-radius: var(--radius-lg); padding: 22px; }
+    .payment-card h3 { font-family: var(--font-display); font-size: 15px; font-weight: 700; color: var(--slate-900); margin-bottom: 16px; }
+    .pay-row { display: flex; align-items: center; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid var(--slate-200); }
+    .pay-row:last-of-type { border-bottom: none; }
+    .pay-label { font-size: 13.5px; font-weight: 600; color: var(--slate-700); }
+    .pay-val { display: flex; align-items: center; gap: 8px; font-size: 13.5px; color: var(--slate-600); }
+    .btn-copy { padding: 3px 9px; border: 1px solid var(--blue-200); background: var(--blue-50); color: var(--blue-700); border-radius: 5px; font-size: 11px; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+    .btn-copy:hover { background: var(--blue-100); }
+    .btn-copy-all { margin-top: 12px; width: 100%; padding: 9px; border: 1px solid var(--slate-300); background: white; color: var(--slate-700); border-radius: var(--radius-sm); font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+    .btn-copy-all:hover { background: var(--slate-50); }
+
+    /* Gallery */
+    .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap: 12px; }
+    .gallery-grid img { width: 100%; height: 155px; object-fit: cover; border-radius: var(--radius-md); border: 1px solid var(--slate-200); transition: all 0.2s var(--ease); }
+    .gallery-grid img:hover { transform: scale(1.03); box-shadow: var(--shadow-md); }
+
+    /* Verano calendar */
+    .verano-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 20px; }
+    .verano-card { background: white; border: 1px solid var(--slate-200); border-radius: var(--radius-lg); padding: 22px; transition: all 0.2s var(--ease); }
+    .verano-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
+    .verano-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .verano-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .verano-card h4 { font-family: var(--font-display); font-size: 16px; font-weight: 700; color: var(--slate-900); }
+    .verano-date { font-size: 13.5px; color: var(--slate-600); margin-bottom: 12px; line-height: 1.5; }
+
+    /* SQL code block */
+    .code-block { background: var(--slate-900); border-radius: var(--radius-md); padding: 20px 22px; font-family: 'Courier New', monospace; font-size: 13px; color: #E2E8F0; line-height: 1.75; overflow-x: auto; }
+    .kw { color: #93C5FD; font-weight: 700; }
+    .fn { color: #FCD34D; }
+    .str { color: #86EFAC; }
+    .cm { color: #475569; font-style: italic; }
+
+    /* Feature grid */
+    .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .feature-card { background: var(--slate-50); border: 1px solid var(--slate-200); border-radius: var(--radius-md); padding: 18px; }
+    .feature-card h4 { font-family: var(--font-display); font-size: 14px; font-weight: 700; color: var(--slate-900); margin-bottom: 8px; }
+    .feature-card ul { list-style: disc; margin-left: 16px; }
+    .feature-card li { font-size: 13px; color: var(--slate-600); line-height: 1.55; margin-bottom: 4px; list-style: disc; }
+
+    /* Toast & Modal */
+    #copy-toast {
+      display: none; position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+      background: var(--slate-900); color: white; padding: 10px 20px; border-radius: var(--radius-full);
+      font-size: 13.5px; font-weight: 600; z-index: 9999; pointer-events: none; box-shadow: var(--shadow-lg);
     }
+    #modal-confirmacion { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.58); align-items: center; justify-content: center; z-index: 9999; backdrop-filter: blur(4px); padding: 16px; }
+    #modal-confirmacion.show { display: flex; }
+    .modal-inner { background: white; padding: 44px 40px; border-radius: var(--radius-xl); max-width: 420px; width: 100%; text-align: center; box-shadow: var(--shadow-xl); animation: modal-pop 0.25s var(--ease-out); }
+    @keyframes modal-pop { from { opacity:0; transform: scale(0.95) translateY(12px); } to { opacity:1; transform: scale(1) translateY(0); } }
+    .modal-inner .modal-icon { font-size: 48px; margin-bottom: 10px; }
+    .modal-inner h3 { font-family: var(--font-display); font-size: 21px; font-weight: 800; color: var(--green-600); margin-bottom: 10px; }
+    .modal-inner p { font-size: 15px; color: var(--slate-600); line-height: 1.62; margin-bottom: 22px; }
+    #btn-cerrar-modal { padding: 11px 28px; background: var(--green-600); color: white; border: none; border-radius: var(--radius-full); font-size: 14px; font-weight: 700; cursor: pointer; transition: background 0.15s; }
+    #btn-cerrar-modal:hover { background: var(--green-700); }
 
-    .btn-submit:active:not(:disabled) { transform: translateY(0); }
-
-    .btn-submit:disabled {
-      opacity: .6;
-      cursor: not-allowed;
+    /* Animaciones de pulso para botones */
+    @keyframes pulse-green {
+      0% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.6); }
+      70% { box-shadow: 0 0 0 14px rgba(22, 163, 74, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); }
     }
-
-    .btn-icon { font-size: 1.15em; transition: transform .3s; }
-    .btn-submit:hover:not(:disabled) .btn-icon { transform: translateX(3px); }
-
-    /* ── SPINNER ── */
-    .spinner {
-      width: 18px; height: 18px;
-      border: 2px solid rgba(255,255,255,.35);
-      border-top-color: white;
-      border-radius: 50%;
-      animation: spin .7s linear infinite;
-      display: none;
+    @keyframes pulse-gold {
+      0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.6); }
+      70% { box-shadow: 0 0 0 14px rgba(245, 158, 11, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
     }
+    .btn-pulse-green { animation: pulse-green 2s infinite; }
+    .btn-pulse-gold { animation: pulse-gold 2s infinite; }
 
-    @keyframes spin { to { transform: rotate(360deg); } }
+    /* Scroll animations */
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.55s var(--ease-out), transform 0.55s var(--ease-out); }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal-d1 { transition-delay: 0.10s; }
+    .reveal-d2 { transition-delay: 0.18s; }
+    .reveal-d3 { transition-delay: 0.26s; }
+    .reveal-d4 { transition-delay: 0.34s; }
+    .reveal-d5 { transition-delay: 0.42s; }
+    .reveal-d6 { transition-delay: 0.50s; }
 
-    /* ── MSG ── */
-    #msg-insc {
-      text-align: center;
-      font-size: .9rem;
-      font-weight: 600;
-      min-height: 24px;
-      margin-top: 12px;
-      color: var(--muted);
+    /* Two col */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+    .divider { height: 1px; background: var(--slate-200); margin: 36px 0; }
+
+    /* Program Logos */
+    .inner-hero-split { display: flex; align-items: center; justify-content: space-between; gap: 40px; }
+    .inner-hero-text { flex: 1; }
+    .inner-hero-logo {
+      width: 140px; height: 140px; flex-shrink: 0;
+      background: rgba(255,255,255,0.06); border-radius: var(--radius-xl); padding: 22px;
+      display: grid; place-items: center; backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+      transition: transform 0.3s var(--ease);
     }
+    .inner-hero-logo:hover { transform: translateY(-5px) scale(1.03); }
+    .inner-hero-logo img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 4px 10px rgba(0,0,0,0.3)); }
 
-    /* ── FOOTER CARD ── */
-    .card-footer {
-      text-align: center;
-      margin-top: 22px;
-      font-size: .82rem;
-      color: rgba(255,255,255,.32);
-      line-height: 1.7;
+    /* ============================================
+       RESPONSIVE
+    ============================================ */
+    @media (max-width: 1024px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-visual { display: none; }
+      .about-grid, .instructor-card, .two-col { grid-template-columns: 1fr; }
+      .instructor-card { grid-template-columns: 1fr; }
+      .instructor-left { padding: 36px 28px; }
+      .courses-grid { grid-template-columns: repeat(2,1fr); }
+      .testimonials-grid { grid-template-columns: repeat(2,1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .services-grid { grid-template-columns: 1fr; }
+      .inner-grid { grid-template-columns: 1fr; }
+      .feature-grid { grid-template-columns: 1fr; }
     }
-
-    .card-footer a {
-      color: var(--gold);
-      text-decoration: none;
-      font-weight: 600;
+    @media (max-width: 768px) {
+      .nav-tabs { display: none; }
+      .nav-cta { display: none; }
+      .nav-mobile-btn { display: flex; }
+      .hero-section, .section { padding: 60px 20px; }
+      .benefits-grid, .courses-grid, .testimonials-grid, .dashboards-grid { grid-template-columns: 1fr; }
+      .form-grid, .cred-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+      .stats-inner { gap: 24px; }
+      .inner-hero-split { flex-direction: column-reverse; align-items: flex-start; gap: 24px; }
+      .inner-hero-logo { width: 90px; height: 90px; padding: 14px; }
     }
-
-    /* ── MODAL ── */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(8,33,58,.82);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      z-index: 1000;
-      display: none;
-      place-items: center;
-      padding: 20px;
+    .nav-tabs.mobile-open {
+      display: flex; flex-direction: column; position: absolute;
+      top: 76px; left: 0; right: 0;
+      background: white; border-bottom: 1px solid var(--slate-200);
+      padding: 10px; box-shadow: var(--shadow-lg); z-index: 998;
     }
-
-    .modal-overlay.show { display: grid; animation: fadeIn .25s ease; }
-
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-    .modal-box {
-      background: linear-gradient(150deg, #0f3054, #183d62);
-      border: 1px solid rgba(255,255,255,.15);
-      border-radius: 28px;
-      padding: 48px 36px 40px;
-      max-width: 440px;
-      width: 100%;
-      text-align: center;
-      box-shadow: 0 30px 80px rgba(0,0,0,.6);
-      animation: popUp .35s cubic-bezier(.34,1.56,.64,1) both;
-    }
-
-    @keyframes popUp {
-      from { opacity: 0; transform: scale(.85) translateY(20px); }
-      to   { opacity: 1; transform: scale(1) translateY(0); }
-    }
-
-    .modal-icon {
-      font-size: 3.8rem;
-      margin-bottom: 16px;
-      display: block;
-      animation: bounce .6s ease .2s both;
-    }
-
-    @keyframes bounce {
-      from { transform: scale(0); opacity: 0; }
-      60%  { transform: scale(1.18); }
-      to   { transform: scale(1); opacity: 1; }
-    }
-
-    .modal-title {
-      font-family: 'Sora', sans-serif;
-      font-size: 1.6rem;
-      font-weight: 800;
-      color: var(--white);
-      margin-bottom: 8px;
-    }
-
-    .modal-body {
-      color: var(--muted);
-      font-size: .95rem;
-      line-height: 1.65;
-      margin-bottom: 8px;
-    }
-
-    .modal-body strong { color: var(--white); }
-
-    /* ── INVITATION BOX ── */
-    .modal-invite {
-      background: rgba(37,211,102,.1);
-      border: 1px solid rgba(37,211,102,.28);
-      border-radius: 16px;
-      padding: 18px 20px;
-      margin: 20px 0 24px;
-    }
-
-    .modal-invite-text {
-      font-family: 'Sora', sans-serif;
-      font-size: .85rem;
-      font-weight: 700;
-      color: rgba(255,255,255,.85);
-      margin-bottom: 14px;
-      line-height: 1.5;
-    }
-
-    .modal-invite-text span {
-      color: #6fe89f;
-    }
-
-    /* ── MODAL BUTTONS ── */
-    .modal-buttons {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .btn-wa-group {
-      background: linear-gradient(135deg, #25D366 0%, #1aa84e 100%);
-      color: white;
-      border: none;
-      border-radius: 14px;
-      padding: 15px 24px;
-      font-family: 'Sora', sans-serif;
-      font-size: 1rem;
-      font-weight: 700;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 9px;
-      transition: transform .15s, filter .15s, box-shadow .15s;
-      box-shadow: 0 8px 24px rgba(37,211,102,.4);
-      text-decoration: none;
-      width: 100%;
-    }
-
-    .btn-wa-group:hover {
-      transform: translateY(-2px);
-      filter: brightness(1.08);
-      box-shadow: 0 12px 30px rgba(37,211,102,.5);
-    }
-
-    .btn-wa-group .wa-badge {
-      background: rgba(255,255,255,.2);
-      border-radius: 6px;
-      padding: 2px 8px;
-      font-size: .72rem;
-      font-weight: 800;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-    }
-
-    .btn-wa-contact {
-      background: rgba(37,211,102,.12);
-      color: #6fe89f;
-      border: 1.5px solid rgba(37,211,102,.3);
-      border-radius: 14px;
-      padding: 13px 24px;
-      font-family: 'Sora', sans-serif;
-      font-size: .9rem;
-      font-weight: 600;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      transition: transform .15s, background .2s, border-color .2s;
-      text-decoration: none;
-      width: 100%;
-    }
-
-    .btn-wa-contact:hover {
-      transform: translateY(-1px);
-      background: rgba(37,211,102,.2);
-      border-color: rgba(37,211,102,.5);
-    }
-
-    .btn-cerrar {
-      background: none;
-      border: none;
-      color: rgba(255,255,255,.3);
-      font-size: .82rem;
-      cursor: pointer;
-      font-family: 'DM Sans', sans-serif;
-      margin-top: 18px;
-      display: block;
-      width: 100%;
-      transition: color .2s;
-    }
-
-    .btn-cerrar:hover { color: rgba(255,255,255,.55); }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 500px) {
-      .card { padding: 28px 20px 32px; }
-      .form-row { grid-template-columns: 1fr; }
-      .modal-box { padding: 36px 20px 30px; }
-    }
+    .nav-tabs.mobile-open .nav-tab { text-align: left; padding: 12px 14px; }
+    .nav-tabs.mobile-open .nav-tab.active::after { display: none; }
   </style>
 </head>
 <body>
 
-  <!-- Fondo decorativo -->
-  <div class="bg-layer">
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="orb orb-3"></div>
-  </div>
-
-  <div class="wrapper">
-
-    <!-- Brand -->
-    <div class="brand">
-      <div class="brand-icon">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <rect x="2" y="10" width="5" height="12" rx="1.5"/>
-          <rect x="9.5" y="6" width="5" height="16" rx="1.5"/>
-          <rect x="17" y="2" width="5" height="20" rx="1.5"/>
-        </svg>
+<nav class="navbar" id="navbar">
+  <div class="navbar-inner">
+    <a class="navbar-brand" href="#" onclick="openTab(event,'inicio')">
+      <div class="navbar-logo"><img src="logo_final.png" alt="Logo CICAPY"></div>
+      <div class="navbar-name-block">
+        <span class="navbar-name">CICAPY</span>
+        <span class="navbar-sub">Instituto Técnico Superior</span>
       </div>
-      <div class="brand-name"><span>POWER BI</span></div>
+    </a>
+
+    <div class="nav-tabs" id="nav-tabs">
+      <button class="nav-tab active" onclick="openTab(event,'inicio')">Inicio</button>
+      <button class="nav-tab" onclick="openTab(event,'servicios')">Servicios</button>
+      <button class="nav-tab" onclick="openTab(event,'verano')">Verano 2026</button>
+      <button class="nav-tab" onclick="openTab(event,'taller')">Taller Libre</button>
+      <button class="nav-tab" onclick="openTab(event,'powerbi')">Power BI</button>
+      <button class="nav-tab" onclick="openTab(event,'excel')">Excel</button>
+      <button class="nav-tab" onclick="openTab(event,'sql')">SQL</button>
     </div>
 
-    <!-- Card principal -->
-    <div class="card">
-
-      <div class="course-badge">Inscripción abierta</div>
-
-      <h1 class="card-title">
-        Power BI para <span>Business Intelligence</span><br>y Analítica de Datos
-      </h1>
-
-      <p class="card-sub">
-        Modelado de datos, Power Query, DAX y dashboards profesionales<br>con apoyo de <strong style="color:rgba(255,255,255,.75)">Inteligencia Artificial</strong>.
-      </p>
-
-      <!-- Pills -->
-      <div class="pills">
-        <span class="pill"><span class="pill-icon">🗂️</span> Modelado de Datos</span>
-        <span class="pill"><span class="pill-icon">⚡</span> Power Query</span>
-        <span class="pill"><span class="pill-icon">📐</span> DAX</span>
-        <span class="pill"><span class="pill-icon">📊</span> Dashboards</span>
-        <span class="pill"><span class="pill-icon">🤖</span> IA Aplicada</span>
-      </div>
-
-      <div class="divider"></div>
-
-      <!-- Formulario -->
-      <form id="form-insc" novalidate>
-
-        <div class="form-row">
-          <div class="field">
-            <label for="nombre">Nombre</label>
-            <input type="text" id="nombre" name="nombre" placeholder="Ej: María" required autocomplete="given-name">
-          </div>
-          <div class="field">
-            <label for="apellido">Apellido</label>
-            <input type="text" id="apellido" name="apellido" placeholder="Ej: García" required autocomplete="family-name">
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="field">
-            <label for="email">Correo electrónico</label>
-            <input type="email" id="email" name="email" placeholder="ejemplo@correo.com" required autocomplete="email">
-          </div>
-          <div class="field">
-            <label for="telefono">Teléfono / WhatsApp</label>
-            <input type="tel" id="telefono" name="telefono" placeholder="+595 9xx xxx xxx" required autocomplete="tel">
-          </div>
-        </div>
-
-        <div class="form-full field">
-          <label for="comentarios">Comentarios <span style="opacity:.45;font-weight:400;text-transform:none;">(opcional)</span></label>
-          <textarea id="comentarios" name="comentarios" placeholder="¿Tenés alguna pregunta o consulta sobre el curso?"></textarea>
-        </div>
-
-        <!-- Ocultos -->
-        <input type="hidden" name="Cursos"          value="Power BI para Business Intelligence y Analítica de Datos">
-        <input type="hidden" name="CantidadCursos"  value="1">
-        <input type="hidden" name="Promoción"       value="No">
-
-        <button id="btn-enviar" class="btn-submit" type="submit">
-          <div class="spinner" id="spinner"></div>
-          <span id="btn-text"><span class="btn-icon">✉️</span> Enviar inscripción</span>
-        </button>
-
-        <div id="msg-insc" role="status" aria-live="polite"></div>
-      </form>
-
-      <div class="card-footer" style="text-align:center;">
-        <strong style="font-size:18px;">
-            ¿Querés formar parte del curso y recibir toda la información?
-        </strong><br><br>
-        <span style="font-size:15px;">
-            Unite directamente a nuestro grupo exclusivo de WhatsApp
-        </span><br><br>
-        <a href="https://wa.me/595983319027" 
-           target="_blank" 
-           rel="noopener"
-           style="display:inline-block;background-color:#25D366;color:white;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:bold;">
-            💬 Contactar por WhatsApp
-        </a><br><br>
-
-        <small style="color:#777;">
-            Cupos limitados – asegurá tu lugar con anticipación.<br>
-            © 2026 IGK - CICAPY 
-        </small>
-      </div>
-
-    </div>
+    <a class="nav-cta" href="https://wa.me/595983352932?text=Hola%21+Quiero+informaci%C3%B3n+sobre+los+cursos." target="_blank" rel="noopener">
+      <span>💬</span> Consultar
+    </a>
+    <button class="nav-mobile-btn" id="mobile-menu-btn" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
   </div>
+</nav>
 
-  <!-- ── MODAL DE CONFIRMACIÓN (NUEVO) ── -->
-  <div class="modal-overlay" id="modal-confirmacion" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
-    <div class="modal-box">
+<div id="inicio" class="tab-content active">
 
-      <span class="modal-icon">🎉</span>
-
-      <h2 class="modal-title" id="modal-titulo">¡Inscripción enviada!</h2>
-
-      <p class="modal-body">
-        Tu inscripción al curso de<br>
-        <strong>Power BI para Business Intelligence</strong><br>
-        fue registrada correctamente.
-      </p>
-
-      <!-- Invitación cordial al grupo -->
-      <div class="modal-invite">
-        <p class="modal-invite-text">
-          📲 ¡Te invitamos cordialmente a unirte a nuestro<br>
-          <span>grupo exclusivo de WhatsApp</span> del curso,<br>
-          donde recibirás toda la información y novedades.
+  <section class="hero-section">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <div class="hero-badge"><div class="hero-dot"></div> Resolución MEC 848/2022</div>
+        <h1 class="hero-title">
+          Formación en<br>
+          <span class="hero-title-accent">Análisis de Datos</span><br>
+          y Business Intelligence
+        </h1>
+        <p class="hero-subtitle">
+          Dominá Power BI, Excel, SQL y más herramientas líderes del mercado. Formación 100% online, práctica y orientada a resultados reales.
         </p>
-
-        <div class="modal-buttons">
-
-          <!-- Botón 1: Unirse al grupo -->
-          <a href="https://chat.whatsapp.com/FX2GA5vVigMDsEPc2ISkxJ"
-             target="_blank"
-             rel="noopener"
-             class="btn-wa-group">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-            </svg>
-            Unirme al grupo del curso
-
-          </a>
-
-
-
+        <div class="hero-cta-group">
+          <a class="btn btn-green" href="https://cicapy.github.io/incripciones_2026/" target="_blank" rel="noopener">✏️ Inscribirme ahora</a>
+          <a class="btn btn-outline" href="https://wa.me/595983352932" target="_blank" rel="noopener">💬 WhatsApp</a>
         </div>
       </div>
+      <div class="hero-visual">
+        <div class="hero-mockup">
+          <div class="mock-top">
+            <span class="mock-label">Ventas Anuales 2025</span>
+            <span class="mock-live">LIVE</span>
+          </div>
+          <div class="mock-chart">
+            <div class="mock-bar"></div><div class="mock-bar"></div>
+            <div class="mock-bar"></div><div class="mock-bar"></div>
+            <div class="mock-bar"></div><div class="mock-bar"></div>
+            <div class="mock-bar"></div>
+          </div>
+          <div class="mock-kpis">
+            <div class="mock-kpi"><div class="mock-kpi-v">₲4.2M</div><div class="mock-kpi-l">Total</div></div>
+            <div class="mock-kpi"><div class="mock-kpi-v">+18%</div><div class="mock-kpi-l">vs 2024</div></div>
+            <div class="mock-kpi"><div class="mock-kpi-v">94%</div><div class="mock-kpi-l">Meta</div></div>
+          </div>
+        </div>
+        <div class="hero-float-1">🎓 Certificación incluida</div>
+        <div class="hero-float-2">🔴 Clases en vivo · Zoom</div>
+      </div>
+    </div>
+  </section>
 
-      <button id="btn-cerrar-modal" class="btn-cerrar">
-        Cerrar ventana
-      </button>
-
+  <div class="stats-bar">
+    <div class="stats-inner">
+      <div class="stat-item"><div class="stat-number">10<span>+</span></div><div class="stat-label">Años de experiencia</div></div>
+      <div class="stat-item"><div class="stat-number">500<span>+</span></div><div class="stat-label">Estudiantes capacitados</div></div>
+      <div class="stat-item"><div class="stat-number">15<span>+</span></div><div class="stat-label">Instituciones clientes</div></div>
+      <div class="stat-item"><div class="stat-number">4<span></span></div><div class="stat-label">Cursos disponibles</div></div>
+      <div class="stat-item"><div class="stat-number">100<span>%</span></div><div class="stat-label">Online · En vivo</div></div>
     </div>
   </div>
 
-  <script>
-  (function () {
-    'use strict';
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-head section-head-center">
+        <span class="section-label">¿Por qué CICAPY?</span>
+        <h2 class="section-title">Todo lo que necesitás para dominar los datos</h2>
+        <p class="section-subtitle">Formación diseñada para que aprendas haciendo, con herramientas y casos del mundo real.</p>
+      </div>
+      <div class="benefits-grid">
+        <div class="benefit-card reveal reveal-d1">
+          <div class="benefit-icon">🛠️</div>
+          <div class="benefit-title">100% Práctico</div>
+          <div class="benefit-desc">Trabajás con datasets reales desde la primera clase. Sin teoría vacía, solo aplicación directa al trabajo.</div>
+        </div>
+        <div class="benefit-card reveal reveal-d2">
+          <div class="benefit-icon">🎯</div>
+          <div class="benefit-title">Orientado al Mercado Laboral</div>
+          <div class="benefit-desc">El contenido está alineado con lo que empresas líderes del Paraguay y la región realmente demandan.</div>
+        </div>
+        <div class="benefit-card reveal reveal-d3">
+          <div class="benefit-icon">🎓</div>
+          <div class="benefit-title">Certificación Oficial</div>
+          <div class="benefit-desc">Al finalizar recibís tu certificado emitido por el Instituto Técnico Superior CICAPY, habilitado por el MEC.</div>
+        </div>
+        <div class="benefit-card reveal reveal-d4">
+          <div class="benefit-icon">📡</div>
+          <div class="benefit-title">Clases en Vivo + Grabaciones</div>
+          <div class="benefit-desc">Cada sesión se dicta en vivo por Zoom con interacción directa. También accedés a grabaciones para repasar cuando quieras.</div>
+        </div>
+        <div class="benefit-card reveal reveal-d5">
+          <div class="benefit-icon">🤖</div>
+          <div class="benefit-title">IA Integrada al Aprendizaje</div>
+          <div class="benefit-desc">Aprendés a usar ChatGPT y Claude para acelerar fórmulas DAX, transformaciones Power Query y análisis de datos.</div>
+        </div>
+        <div class="benefit-card reveal reveal-d6">
+          <div class="benefit-icon">📁</div>
+          <div class="benefit-title">Material Completo Incluido</div>
+          <div class="benefit-desc">Datasets, ejercicios, plantillas y recursos descargables disponibles para todos los participantes.</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbws0FfKtWvkcArK6-pmu45jO01M0cPOpif2Ya0nej8Vk1dPXNF0QOj5Q6e61kzdZgT3/exec';
+  <section class="section">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-text">
+          <span class="section-label">Sobre nosotros</span>
+          <h2 class="section-title">Referentes en formación de datos en Paraguay</h2>
+          <p>En el <strong>Instituto Técnico Superior CICAPY</strong>, nos especializamos en educación virtual de alta calidad, con enfoque en tecnologías modernas para el análisis de datos y la inteligencia de negocios.</p>
+          <p>Potenciamos las habilidades de profesionales, analistas y equipos empresariales para enfrentar los desafíos del mundo digital con herramientas reales y conocimiento aplicable desde el primer día.</p>
+          <div class="about-resolution">📋 Resolución MEC 848/2022 · Paraguay</div>
+        </div>
+        <div class="mv-stack">
+          <div class="mv-card mission">
+            <div class="mv-type">🎯 Misión</div>
+            <p class="mv-text">Formar profesionales altamente capacitados mediante programas educativos virtuales innovadores en tecnologías de análisis de datos, promoviendo la transformación digital y la toma de decisiones basada en datos en Paraguay y más allá.</p>
+          </div>
+          <div class="mv-card vision">
+            <div class="mv-type">🚀 Visión</div>
+            <p class="mv-text">Ser reconocidos como referente regional en educación virtual, transformando el aprendizaje en análisis de datos y contribuyendo al desarrollo tecnológico y profesional de nuestros estudiantes.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    var form    = document.getElementById('form-insc');
-    var btn     = document.getElementById('btn-enviar');
-    var btnText = document.getElementById('btn-text');
-    var spinner = document.getElementById('spinner');
-    var msg     = document.getElementById('msg-insc');
-    var modal   = document.getElementById('modal-confirmacion');
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-head section-head-center">
+        <span class="section-label">Cursos disponibles</span>
+        <h2 class="section-title">Formación de alto impacto en datos</h2>
+        <p class="section-subtitle">Programas diseñados para llevarte desde los fundamentos hasta un nivel profesional y certificado.</p>
+      </div>
+      <div class="courses-grid">
+        <div class="course-card course-card-pbi reveal reveal-d1">
+          <div class="course-top-bar"></div>
+          <div class="course-body">
+            <div class="course-icon">📊</div>
+            <div class="course-name">Power BI para Business Intelligence y Analítica de Datos + IA</div>
+            <div class="course-desc">Modelado de datos, Power Query, DAX, dashboards ejecutivos y analítica aplicada con Inteligencia Artificial.</div>
+            <div class="course-tags">
+              <span class="tag tag-orange">Básico – Avanzado</span>
+              <span class="tag tag-blue">5 sesiones</span>
+              <span class="tag tag-sky">Zoom en vivo</span>
+            </div>
+            <div class="course-meta">
+              <span class="meta-item">📅 Lun & Mar</span>
+              <span class="meta-item">⏱ 2 horas/sesión</span>
+            </div>
+            <button class="btn btn-primary btn-sm btn-full" onclick="openTab(null,'powerbi')">Ver programa completo →</button>
+          </div>
+        </div>
+        <div class="course-card course-card-excel reveal reveal-d2">
+          <div class="course-top-bar"></div>
+          <div class="course-body">
+            <div class="course-icon">📗</div>
+            <div class="course-name">Excel Moderno: Power Query + Power Pivot</div>
+            <div class="course-desc">Automatizá reportes, construí modelos de datos y creá dashboards profesionales sin salir de Excel.</div>
+            <div class="course-tags">
+              <span class="tag tag-green">Intermedio – Avanzado</span>
+              <span class="tag tag-blue">7 sesiones</span>
+              <span class="tag tag-sky">Zoom en vivo</span>
+            </div>
+            <div class="course-meta">
+              <span class="meta-item">📅 Online</span>
+              <span class="meta-item">⏱ 2 horas/sesión</span>
+            </div>
+            <button class="btn btn-primary btn-sm btn-full" onclick="openTab(null,'excel')">Ver programa completo →</button>
+          </div>
+        </div>
+        <div class="course-card course-card-sql reveal reveal-d3">
+          <div class="course-top-bar"></div>
+          <div class="course-body">
+            <div class="course-icon">🗄️</div>
+            <div class="course-name">SQL para Business Intelligence y Analítica de Datos + IA</div>
+            <div class="course-desc">Aprendé SQL + IA, ChatGPT y Claude para consultar, analizar y acelerar flujos de Business Intelligence.</div>
+            <div class="course-tags">
+              <span class="tag tag-purple">Básico – Intermedio</span>
+              <span class="tag tag-blue">6 sesiones</span>
+              <span class="tag tag-sky">Sábados</span>
+            </div>
+            <div class="course-meta">
+              <span class="meta-item">📅 Sábados</span>
+              <span class="meta-item">⏱ 09:30 – 11:30</span>
+            </div>
+            <button class="btn btn-primary btn-sm btn-full" onclick="openTab(null,'sql')">Ver programa completo →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    function generarID() {
-      return 'SUB-' + Date.now() + '-' + Math.floor(Math.random() * 9999);
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title">Capacitador</h2>
+      </div>
+      <div class="instructor-card">
+        <div class="instructor-left">
+          <img class="instructor-photo" src="images/foto.jpg" alt="Foto del capacitador" onerror="this.src='https://via.placeholder.com/130x130?text=Prof'">
+          <div class="instructor-name">Oscar González Frutos</div>
+          <div class="instructor-role">Docente & Director Académico</div>
+          <div class="inst-social">
+            <a class="inst-social-btn" href="https://oscar-pry.github.io/web_personal/" target="_blank" rel="noopener">🌐 Web</a>
+            <a class="inst-social-btn" href="https://www.linkedin.com/in/oscar-gonz%C3%A1lez-frutos" target="_blank" rel="noopener">🔗 LinkedIn</a>
+          </div>
+        </div>
+        <div class="instructor-right">
+          <span class="section-label">Docente Principal</span>
+          <h2>Más de 10 años formando profesionales en datos</h2>
+          <p>Estadístico, analista y docente apasionado por transformar la manera en que las personas trabajan con datos. Combina rigor académico de nivel internacional con una metodología práctica y orientada a resultados.</p>
+          <div class="cred-grid">
+            <div class="cred-item"><div class="cred-label">Licenciatura</div><div class="cred-value">Matemática Estadística · FACEN-UNA</div></div>
+            <div class="cred-item"><div class="cred-label">Maestría (MSc)</div><div class="cred-value">Estadística Aplicada · Univ. de Granada, España (Becal)</div></div>
+            <div class="cred-item"><div class="cred-label">Certificación</div><div class="cred-value">Data Science con R · HarvardX (Harvard University)</div></div>
+            <div class="cred-item"><div class="cred-label">Herramientas</div><div class="cred-value">SQL · Excel · Power BI · R · Python</div></div>
+          </div>
+          <div class="exp-chips">
+            <span class="exp-chip">BCP</span><span class="exp-chip">Itaipú Binacional</span><span class="exp-chip">DGEEC</span>
+            <span class="exp-chip">MEC</span><span class="exp-chip">FACEN-UNA</span><span class="exp-chip">Min. Desarrollo Social</span>
+            <span class="exp-chip">Banco Familiar</span><span class="exp-chip">Bancoop</span><span class="exp-chip">Automotor</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head section-head-center">
+        <span class="section-label">Proyectos reales</span>
+        <h2 class="section-title">Dashboards creados en clase</h2>
+        <p class="section-subtitle">Estos son algunos de los reportes e informes interactivos que los participantes construyen durante los cursos.</p>
+      </div>
+      <div class="dashboards-grid">
+        <div class="dashboard-card">
+          <div class="video-wrap">
+            <iframe title="modelo_estrella_medidas_informe"
+              src="https://app.powerbi.com/view?r=eyJrIjoiODExN2ZmNDUtYTg4OS00MGU5LTljMGQtNDFlMTVlZTQ4NzlhIiwidCI6IjBiNjk2MDAyLWQ2YTYtNDI2Ni04OTI4LTE1ZWQ4ZDA2NDQxMCIsImMiOjR9"
+              frameborder="0" allowfullscreen loading="lazy"></iframe>
+          </div>
+          <div class="dash-body"><h4>Dashboard de Ventas – Modelo Estrella</h4><p>Reporte interactivo con medidas DAX, segmentadores y análisis por categoría.</p></div>
+        </div>
+        <div class="dashboard-card">
+          <div class="video-wrap">
+            <iframe title="Informe_Ventas_Final"
+              src="https://app.powerbi.com/view?r=eyJrIjoiMGM4ZjAxZWYtMzkwNS00ZWRjLWI5YjktMzE1MzE4ZmI2YTQ2IiwidCI6IjBiNjk2MDAyLWQ2YTYtNDI2Ni04OTI4LTE1ZWQ4ZDA2NDQxMCIsImMiOjR9"
+              frameborder="0" allowfullscreen loading="lazy"></iframe>
+          </div>
+          <div class="dash-body"><h4>Informe de Ventas Final</h4><p>Dashboard ejecutivo con KPIs, tendencias y comparativa entre períodos.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="cta-inner">
+      <h2 class="cta-title">Inscribite ahora y potenciá tu carrera</h2>
+      <p class="cta-sub">El mercado laboral demanda profesionales que sepan trabajar con datos. Empezá hoy con formación de calidad, respaldo institucional y orientación práctica.</p>
+      <div class="cta-btns">
+        <a class="btn btn-green" href="https://cicapy.github.io/incripciones_2026/" target="_blank" rel="noopener">✏️ Quiero inscribirme</a>
+        <a class="btn btn-outline" href="https://wa.me/595983352932?text=Hola%21+Quiero+consultar+sobre+los+cursos." target="_blank" rel="noopener">💬 Consultar por WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <div class="footer-logo"><img src="logo_final.png" alt="Logo CICAPY"></div>
+          <div>
+            <span class="footer-brand-name">CICAPY</span>
+            <span class="footer-brand-sub">Instituto Técnico Superior</span>
+          </div>
+        </div>
+        <p class="footer-tagline">Centro de Investigación y Capacitación Paraguay. Formación en Análisis de Datos e Inteligencia de Negocios. Resolución MEC 848/2022.</p>
+        <ul class="footer-contact">
+          <li>📱 <a href="https://wa.me/595983352932" target="_blank" rel="noopener">+595 983 352 932</a></li>
+          <li>✉️ <a href="mailto:cicapy2022@gmail.com">cicapy2022@gmail.com</a></li>
+          <li>📘 <a href="https://www.facebook.com/cicap2021" target="_blank" rel="noopener">facebook.com/cicap2021</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Cursos</div>
+        <span class="footer-link" onclick="openTab(null,'taller')">Taller Libre (En Vivo)</span>
+        <span class="footer-link" onclick="openTab(null,'powerbi')">Power BI + IA</span>
+        <span class="footer-link" onclick="openTab(null,'excel')">Excel Avanzado</span>
+        <span class="footer-link" onclick="openTab(null,'sql')">SQL + IA</span>
+        <span class="footer-link" onclick="openTab(null,'verano')">Curso de Verano 2026</span>
+      </div>
+      <div>
+        <div class="footer-col-title">Instituto</div>
+        <span class="footer-link" onclick="openTab(null,'inicio')">Sobre CICAPY</span>
+        <span class="footer-link" onclick="openTab(null,'servicios')">Servicios Empresariales</span>
+        <a class="footer-link" href="https://oscar-pry.github.io/web_personal/" target="_blank" rel="noopener">Web del Capacitador</a>
+        <a class="footer-link" href="https://www.linkedin.com/in/oscar-gonz%C3%A1lez-frutos" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+      <div>
+        <div class="footer-col-title">Inscripciones</div>
+        <span class="footer-link" onclick="openTab(null,'powerbi')">Cursos Disponibles 2026</span>
+        <a class="footer-link" href="https://cicapy.github.io/incripciones_2026/" target="_blank" rel="noopener">Inscripciones Abiertas</a>
+        <a class="footer-link" href="https://wa.me/595983352932" target="_blank" rel="noopener">Consultar por WhatsApp</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-bottom-text">© 2026 CICAPY – Instituto Técnico Superior. Resolución MEC 848/2022.</span>
+      <span class="footer-bottom-text">Todos los derechos reservados · Paraguay</span>
+    </div>
+  </footer>
+
+</div><div id="servicios" class="tab-content">
+  <section class="inner-hero">
+    <div class="inner-hero-inner">
+      <div class="inner-badge">🏢 Capacitación Empresarial</div>
+      <h1 class="inner-title">Soluciones de formación a medida para organizaciones</h1>
+      <p class="inner-sub">Programas personalizados de análisis de datos e inteligencia de negocios para equipos que quieren tomar mejores decisiones.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <a class="btn btn-green" href="https://wa.me/595983352932?text=Hola%21+Quiero+consultar+sobre+capacitaci%C3%B3n+empresarial." target="_blank" rel="noopener">💬 Consultar presupuesto</a>
+        <a class="btn btn-outline" href="mailto:cicapy2022@gmail.com">✉️ Enviar email</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-dark">
+    <div class="container">
+      <div class="section-head section-head-center">
+        <span class="section-label section-label-white">¿Qué ofrecemos?</span>
+        <h2 class="section-title section-title-white">Formación profesional adaptada a tu empresa</h2>
+        <p class="section-subtitle section-subtitle-white">Capacitamos equipos con herramientas reales y metodología orientada a resultados medibles desde el primer día.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">📊</div>
+          <div class="service-title">Power BI & Dashboards Empresariales</div>
+          <div class="service-desc">Formación en Power BI enfocada en el negocio de tu empresa: modelado de datos, DAX e informes ejecutivos con tus propios datos.</div>
+          <ul class="service-list">
+            <li>Dashboards de ventas, finanzas, operaciones y RRHH</li>
+            <li>Integración con bases de datos corporativas</li>
+            <li>Automatización de reportes periódicos</li>
+          </ul>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">📗</div>
+          <div class="service-title">Excel Avanzado & Automatización</div>
+          <div class="service-desc">Power Query, Power Pivot, macros y fórmulas avanzadas para eliminar tareas manuales y mejorar la productividad del equipo.</div>
+          <ul class="service-list">
+            <li>Automatización de informes y consolidación de datos</li>
+            <li>Modelos de datos con Power Pivot + DAX en Excel</li>
+            <li>Reportes dinámicos con tablas pivot avanzadas</li>
+          </ul>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🗄️</div>
+          <div class="service-title">SQL para Equipos de Análisis</div>
+          <div class="service-desc">Enseñamos a tu equipo a extraer, filtrar y analizar datos directamente desde bases de datos relacionales usando MySQL.</div>
+          <ul class="service-list">
+            <li>Consultas SELECT, JOINs, GROUP BY y subconsultas</li>
+            <li>Análisis de datos transaccionales y operativos</li>
+            <li>Integración SQL → Power BI para reportes directos</li>
+          </ul>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🤝</div>
+          <div class="service-title">Modalidad In-Company & Online</div>
+          <div class="service-desc">Flexibilidad total: dictamos las capacitaciones en las instalaciones de tu empresa o de forma online sincrónica vía Zoom.</div>
+          <ul class="service-list">
+            <li>Modalidad 100% online, híbrida o presencial (in-company)</li>
+            <li>Horarios adaptados a la operativa de tu empresa</li>
+            <li>Material y datasets de tu propia industria</li>
+          </ul>
+        </div>
+      </div>
+      <div style="text-align:center;">
+        <a class="btn btn-green" href="https://wa.me/595983352932?text=Hola%21+Me+interesa+capacitar+a+mi+equipo.+%C2%BFPodr%C3%ADan+enviarme+una+propuesta%3F" target="_blank" rel="noopener" style="font-size:16px;padding:14px 32px;">💬 Solicitá tu propuesta personalizada</a>
+        <p style="color:rgba(255,255,255,0.50);font-size:13.5px;margin-top:12px;">También podés escribirnos a cicapy2022@gmail.com</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head section-head-center">
+        <span class="section-label">El equipo docente</span>
+        <h2 class="section-title">Capacitador con experiencia institucional comprobada</h2>
+      </div>
+      <div class="instructor-card">
+        <div class="instructor-left">
+          <img class="instructor-photo" src="foto.jpg" alt="Foto del capacitador" onerror="this.src='https://via.placeholder.com/130x130?text=Prof'">
+          <div class="instructor-name">Oscar González Frutos</div>
+          <div class="instructor-role">Docente & Director Académico</div>
+          <div class="inst-social">
+            <a class="inst-social-btn" href="https://oscar-pry.github.io/web_personal/" target="_blank" rel="noopener">🌐 Web</a>
+            <a class="inst-social-btn" href="https://www.linkedin.com/in/oscar-gonz%C3%A1lez-frutos" target="_blank" rel="noopener">🔗 LinkedIn</a>
+          </div>
+        </div>
+        <div class="instructor-right">
+          <span class="section-label">Experiencia en organizaciones líderes</span>
+          <h2>Lic. en Matemática Estadística · MSc. Estadística Aplicada</h2>
+          <p>Ha impartido capacitaciones en instituciones públicas y privadas de primer nivel en Paraguay, incluyendo organismos financieros, educativos y gubernamentales.</p>
+          <div class="exp-chips" style="margin-bottom:14px;">
+            <span class="exp-chip">BCP</span><span class="exp-chip">Itaipú Binacional</span><span class="exp-chip">DGEEC</span>
+            <span class="exp-chip">MEC</span><span class="exp-chip">FACEN-UNA</span><span class="exp-chip">Min. Desarrollo Social</span>
+            <span class="exp-chip">Banco Familiar</span><span class="exp-chip">Bancoop</span><span class="exp-chip">Automotor</span><span class="exp-chip">Sueñolar</span>
+          </div>
+          <div class="cred-grid">
+            <div class="cred-item"><div class="cred-label">Maestría</div><div class="cred-value">Estadística Aplicada · Univ. de Granada, España</div></div>
+            <div class="cred-item"><div class="cred-label">Certificación Harvard</div><div class="cred-value">Data Science con R · HarvardX</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-head section-head-center">
+        <span class="section-label">Galería</span>
+        <h2 class="section-title">Momentos de nuestras capacitaciones</h2>
+      </div>
+      <div class="gallery-grid">
+        <img src="images/f1.jpg" alt="Capacitación 1"><img src="images/f2.jpg" alt="Capacitación 2">
+        <img src="images/f3.jpg" alt="Capacitación 3"><img src="images/f4.jpg" alt="Capacitación 4">
+        <img src="images/f5.jpg" alt="Capacitación 5"><img src="images/f6.jpg" alt="Capacitación 6">
+        <img src="images/f7.jpg" alt="Capacitación 7">
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="cta-inner">
+      <h2 class="cta-title">¿Querés capacitar a tu equipo?</h2>
+      <p class="cta-sub">Solicitá una propuesta personalizada sin compromiso. Adaptamos el programa al sector, nivel y objetivos de tu organización.</p>
+      <div class="cta-btns">
+        <a class="btn btn-green" href="https://wa.me/595983352932?text=Hola%21+Me+interesa+capacitar+a+mi+equipo.+%C2%BFPodr%C3%ADan+enviarme+una+propuesta%3F" target="_blank" rel="noopener">💬 Consultar por WhatsApp</a>
+        <a class="btn btn-outline" href="mailto:cicapy2022@gmail.com">✉️ Enviar email</a>
+      </div>
+    </div>
+  </section>
+</div><div id="verano" class="tab-content">
+  <section class="inner-hero">
+    <div class="inner-hero-inner">
+      <div class="inner-badge">☀️ Edición Verano</div>
+      <h1 class="inner-title">Curso de Verano 2026</h1>
+      <p class="inner-sub">Formación intensiva en Inteligencia de Negocios y Análisis de Datos. Clases en vivo por Zoom, certificación incluida y material descargable.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <a class="btn btn-green" href="https://cicapy.github.io/incripciones_2026/" target="_blank" rel="noopener">✏️ Ir a Inscripciones</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head section-head-center">
+        <span class="section-label">¿Qué incluye?</span>
+        <h2 class="section-title">Formación intensiva de verano</h2>
+      </div>
+      <div class="benefits-grid" style="margin-bottom:60px;">
+        <div class="benefit-card"><div class="benefit-icon">🚀</div><div class="benefit-title">100% Online</div><div class="benefit-desc">Modalidad ideal para aprender desde casa durante el verano, sin desplazamientos.</div></div>
+        <div class="benefit-card"><div class="benefit-icon">📊</div><div class="benefit-title">Básico a Avanzado</div><div class="benefit-desc">Cursos disponibles en múltiples niveles. Comenzás donde corresponde a tu experiencia.</div></div>
+        <div class="benefit-card"><div class="benefit-icon">🛠️</div><div class="benefit-title">Enfoque Práctico</div><div class="benefit-desc">Ejercicios con datasets reales desde la primera clase. Aprendés haciendo, no memorizando.</div></div>
+        <div class="benefit-card"><div class="benefit-icon">📁</div><div class="benefit-title">Material Incluido</div><div class="benefit-desc">Acceso a grabaciones, recursos descargables y plantillas de trabajo.</div></div>
+        <div class="benefit-card"><div class="benefit-icon">🎓</div><div class="benefit-title">Certificación</div><div class="benefit-desc">Certificado oficial del Instituto Técnico Superior CICAPY al finalizar cada curso.</div></div>
+        <div class="benefit-card"><div class="benefit-icon">🎥</div><div class="benefit-title">Zoom en Vivo</div><div class="benefit-desc">Todas las clases se dictan en vivo con el docente, con espacio para consultas en tiempo real.</div></div>
+      </div>
+
+      <div class="section-head section-head-center">
+        <span class="section-label">Calendario académico</span>
+        <h2 class="section-title">Cursos disponibles · Verano 2026</h2>
+        <p class="section-subtitle">Organizá tu verano con formación de alto impacto. Todas las clases se dictan en vivo por Zoom.</p>
+      </div>
+      <div class="verano-grid" style="margin-bottom:48px;">
+        <div class="verano-card">
+          <div class="verano-header"><div class="verano-dot" style="background:#2563EB"></div><h4>Excel Básico</h4></div>
+          <p class="verano-date"><strong>19 al 22 de enero de 2026</strong><br>19:45 a 21:45 · Online</p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;"><span class="tag tag-blue">Nivel Básico</span><span class="tag tag-sky">Zoom en vivo</span></div>
+        </div>
+        <div class="verano-card">
+          <div class="verano-header"><div class="verano-dot" style="background:#F59E0B"></div><h4>Power BI – Reportes y Dashboards</h4></div>
+          <p class="verano-date"><strong>26 al 30 de enero de 2026</strong><br>19:45 a 21:45 · Online</p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;"><span class="tag tag-orange">Básico – Intermedio</span><span class="tag tag-sky">Zoom en vivo</span></div>
+        </div>
+        <div class="verano-card">
+          <div class="verano-header"><div class="verano-dot" style="background:#16A34A"></div><h4>SQL (MySQL)</h4></div>
+          <p class="verano-date"><strong>Desde 24 de enero (sábados)</strong><br>09:30 a 11:30 · Online</p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;"><span class="tag tag-green">Básico – Intermedio</span><span class="tag tag-sky">Zoom en vivo</span></div>
+        </div>
+        <div class="verano-card">
+          <div class="verano-header"><div class="verano-dot" style="background:#EF4444"></div><h4>Power BI Avanzado</h4></div>
+          <p class="verano-date"><strong>02 al 06 de febrero de 2026</strong><br>19:45 a 21:45 · Online</p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;"><span class="tag" style="background:#FEF2F2;color:#B91C1C">Nivel Avanzado</span><span class="tag tag-sky">Zoom en vivo</span></div>
+        </div>
+        <div class="verano-card">
+          <div class="verano-header"><div class="verano-dot" style="background:#0EA5E9"></div><h4>Análisis con Excel: Power Query + Power Pivot</h4></div>
+          <p class="verano-date"><strong>09 al 13 de febrero de 2026</strong><br>19:45 a 21:45 · Online</p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;"><span class="tag tag-teal">Intermedio – Avanzado</span><span class="tag tag-sky">Zoom en vivo</span></div>
+        </div>
+      </div>
+
+      <div style="text-align:center;">
+        <h3 style="font-family:var(--font-display);font-size:22px;font-weight:800;color:var(--slate-900);margin-bottom:10px;">📝 Inscripciones abiertas</h3>
+        <p style="font-size:15.5px;color:var(--slate-500);max-width:600px;margin:0 auto 24px;line-height:1.65;">Asegurá tu lugar en el Curso de Verano 2026 y potenciá tu perfil profesional con herramientas altamente demandadas.</p>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+          <a class="btn btn-green" href="https://cicapy.github.io/incripciones_2026/" target="_blank" rel="noopener">👉 Ir a Inscripciones</a>
+          <a class="btn btn-outline-blue" href="https://wa.me/595983352932" target="_blank" rel="noopener">💬 Consultar por WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div><div id="taller" class="tab-content">
+  <section class="inner-hero" style="background: linear-gradient(135deg, #0A1628 0%, #060E1A 100%); position: relative; overflow: hidden;">
+    <div class="inner-hero-inner">
+      <div class="inner-badge" style="background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.3); color: #FCD34D;">⭐ Acceso Libre</div>
+      <h1 class="inner-title">Aprende Power BI y SQL con IA</h1>
+      <p class="inner-sub">¡Formación profesional en vivo! Crea dashboards interactivos y escribe consultas SQL inteligentes aplicando Inteligencia Artificial al análisis de datos.</p>
+      <div class="inner-tags" style="margin-top: 20px; margin-bottom: 24px;">
+        <span class="inner-tag" style="background: rgba(245,158,11,0.15); color: #FCD34D; border: 1px solid rgba(245,158,11,0.3);">📅 Sábado 11 de Abril</span>
+        <span class="inner-tag" style="background: rgba(255,255,255,0.05); color: white; border: 1px solid rgba(255,255,255,0.1);">🕘 9:00 AM - 11:30 AM (2h 30min)</span>
+        <span class="inner-tag" style="background: rgba(59,130,246,0.15); color: #93C5FD; border: 1px solid rgba(59,130,246,0.3);">💻 Vía Zoom</span>
+      </div>
+      <div style="display:flex; gap:12px; flex-wrap:wrap;">
+        <a class="btn btn-green btn-pulse-green" href="https://cicapy.github.io/inscripciones_2026/" target="_blank" rel="noopener" style="font-size: 15px; padding: 14px 28px;">🎟️ Inscribirme al Taller</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="inner-content">
+    <div class="two-col" style="align-items: center;">
+      <div>
+        <h2 style="font-family: var(--font-display); font-size: 28px; font-weight: 800; color: var(--slate-900); margin-bottom: 24px;">Lo que veremos en el taller</h2>
+        
+        <div class="timeline">
+          <div class="timeline-step">
+            <div class="t-num" style="background: #F59E0B;">1</div>
+            <div class="t-body">
+              <h4>Crea Dashboards Profesionales</h4>
+              <p>Aprende a diseñar y construir paneles de control interactivos y de alto impacto visual utilizando las mejores prácticas en Power BI.</p>
+            </div>
+          </div>
+          <div class="timeline-step">
+            <div class="t-num" style="background: #3B82F6;">2</div>
+            <div class="t-body">
+              <h4>Escribe Consultas SQL con IA</h4>
+              <p>Descubre cómo utilizar la Inteligencia Artificial para estructurar, depurar y generar consultas complejas a bases de datos en tiempo récord.</p>
+            </div>
+          </div>
+          <div class="timeline-step">
+            <div class="t-num" style="background: #8B5CF6;">3</div>
+            <div class="t-body">
+              <h4>Inteligencia Artificial aplicada al análisis</h4>
+              <p>Integración de asistentes virtuales modernos para acelerar significativamente el flujo de trabajo del analista de datos moderno.</p>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: 36px; padding: 28px; background: linear-gradient(135deg, var(--navy-800), var(--navy-900)); border: 1px solid rgba(245,158,11,0.3); border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);">
+          <h3 style="font-family: var(--font-display); font-size: 20px; font-weight: 700; color: #FCD34D; margin-bottom: 12px;">🎟️ Asegura tu lugar (Cupos limitados)</h3>
+          <p style="font-size: 14.5px; color: rgba(255,255,255,0.8); margin-bottom: 20px;">El taller es de <strong>Acceso Libre</strong> pero requiere inscripción previa para recibir el link de Zoom y los materiales de práctica.</p>
+          <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+            <a class="btn btn-gold btn-pulse-gold" href="https://cicapy.github.io/inscripciones_2026/" target="_blank" rel="noopener" style="font-size: 15px; padding: 12px 24px;">👉 Completar Inscripción</a>
+            <a class="btn btn-outline" href="https://wa.me/595983352932" target="_blank" rel="noopener">💬 Consultar WhatsApp</a>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align: center;">
+        <img src="taller.jpg" class="poster-img" alt="Afiche Taller Aprende Power BI y SQL con IA" onerror="this.src='https://via.placeholder.com/600x600?text=Afiche+Taller'">
+      </div>
+    </div>
+
+    <!-- Capacitador del Taller Libre -->
+    <div class="divider"></div>
+    <h2 style="font-family:var(--font-display);font-size:22px;font-weight:800;color:var(--slate-900);margin-bottom:20px;text-align:center;">👨‍🏫 Capacitador del Taller</h2>
+    <div class="instructor-card" style="margin-bottom: 20px;">
+      <div class="instructor-left">
+        <img class="instructor-photo" src="foto.jpg" alt="Foto del capacitador" onerror="this.src='https://via.placeholder.com/130x130?text=Prof'">
+        <div class="instructor-name">Oscar González Frutos</div>
+        <div class="instructor-role">Docente & Director Académico</div>
+        <div class="inst-social">
+          <a class="inst-social-btn" href="https://oscar-pry.github.io/web_personal/" target="_blank" rel="noopener">🌐 Web</a>
+          <a class="inst-social-btn" href="https://www.linkedin.com/in/oscar-gonz%C3%A1lez-frutos" target="_blank" rel="noopener">🔗 LinkedIn</a>
+        </div>
+      </div>
+      <div class="instructor-right">
+        <span class="section-label">Docente Principal</span>
+        <h2>Más de 10 años formando profesionales en datos</h2>
+        <p>Estadístico, analista y docente apasionado por transformar la manera en que las personas trabajan con datos. Combina rigor académico de nivel internacional con una metodología práctica y orientada a resultados.</p>
+        <div class="cred-grid">
+          <div class="cred-item"><div class="cred-label">Licenciatura</div><div class="cred-value">Matemática Estadística · FACEN-UNA</div></div>
+          <div class="cred-item"><div class="cred-label">Maestría (MSc)</div><div class="cred-value">Estadística Aplicada · Univ. de Granada, España</div></div>
+        </div>
+        <div class="exp-chips" style="margin-top:14px;">
+          <span class="exp-chip">BCP</span><span class="exp-chip">Itaipú Binacional</span><span class="exp-chip">DGEEC</span>
+          <span class="exp-chip">MEC</span><span class="exp-chip">FACEN-UNA</span><span class="exp-chip">Min. Desarrollo Social</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="powerbi" class="tab-content">
+  <section class="inner-hero">
+    <div class="inner-hero-inner inner-hero-split">
+      <div class="inner-hero-text">
+        <div class="inner-badge">📊 Análisis de Datos</div>
+        <h1 class="inner-title">Power BI para Business Intelligence y Analítica de Datos + IA</h1>
+        <p class="inner-sub">Modelado de datos, Power Query, DAX y dashboards ejecutivos con apoyo de Inteligencia Artificial. 5 sesiones prácticas en vivo.</p>
+        <div class="inner-tags">
+          <span class="inner-tag">Business Intelligence</span><span class="inner-tag">Power Query</span>
+          <span class="inner-tag">DAX</span><span class="inner-tag">Dashboards</span>
+          <span class="inner-tag">ChatGPT & Claude</span>
+        </div>
+      </div>
+      <div class="inner-hero-logo">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/c/cf/New_Power_BI_Logo.svg" alt="Logo Power BI">
+      </div>
+    </div>
+  </section>
+
+  <div class="inner-content">
+    <div class="inner-grid">
+      <div class="inner-card">
+        <h2>⚙️ Metodología</h2>
+        <ul class="inner-card-list">
+          <li>Clases en vivo por Zoom + acceso a grabaciones.</li>
+          <li>Aprendizaje práctico con datasets reales y ejercicios guiados.</li>
+          <li>Flujo completo: datos → transformación → modelo → DAX → dashboard.</li>
+          <li>Uso de ChatGPT y Claude para acelerar fórmulas, transformaciones y documentación.</li>
+          <li>Acompañamiento y soporte durante el proceso de aprendizaje.</li>
+        </ul>
+      </div>
+      <div class="inner-card">
+        <h2>📅 Modalidad y Fechas</h2>
+        <ul class="inner-card-list">
+          <li><strong>Modalidad:</strong> Híbrida – sincrónica y asincrónica.</li>
+          <li><strong>Duración:</strong> 5 sesiones.</li>
+          <li><strong>Horario lunes:</strong> 20:00 – 21:30 hs</li>
+          <li><strong>Horario martes:</strong> 19:45 – 21:45 hs</li>
+          <li>Zona horaria: GMT-3 (Paraguay)</li>
+          <li>Incluye materiales, datasets y certificado.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="inner-card" style="margin-bottom:28px;">
+      <h2>🎯 ¿A quién va dirigido?</h2>
+      <div class="feature-grid" style="margin-top:12px;">
+        <div class="feature-card"><h4>Profesionales de distintas áreas</h4><ul><li>Analistas, contadores, administradores que necesitan reportes dinámicos</li></ul></div>
+        <div class="feature-card"><h4>Usuarios de Excel</h4><ul><li>Personas que quieran dar el salto a Business Intelligence moderno</li></ul></div>
+        <div class="feature-card"><h4>Ingenieros, docentes y emprendedores</h4><ul><li>Quienes buscan optimizar procesos con datos e inteligencia analítica</li></ul></div>
+        <div class="feature-card"><h4>Estudiantes y egresados</h4><ul><li>Que buscan fortalecer su perfil con Power BI e IA en el mercado laboral</li></ul></div>
+      </div>
+    </div>
+
+    <div class="inner-card" style="margin-bottom:28px;">
+      <h2 style="margin-bottom:20px;">📚 Programa — 5 sesiones</h2>
+      <div class="timeline">
+        <div class="timeline-step">
+          <div class="t-num">1</div>
+          <div class="t-body">
+            <div class="t-pills"><span class="t-pill">BI</span><span class="t-pill">Ecosistema</span><span class="t-pill">Fuentes</span></div>
+            <h4>Introducción a Business Intelligence y conexión de datos</h4>
+            <ul><li>Conceptos fundamentales de Business Intelligence y analítica de datos.</li><li>Flujo de trabajo: obtener → transformar → modelar → visualizar → publicar.</li><li>Conexión a Excel, CSV, carpetas, SQL y fuentes web desde Power BI.</li></ul>
+          </div>
+        </div>
+        <div class="timeline-step">
+          <div class="t-num">2</div>
+          <div class="t-body">
+            <div class="t-pills"><span class="t-pill">Power Query</span><span class="t-pill">Limpieza</span><span class="t-pill">Automatización</span></div>
+            <h4>Power Query: limpieza, transformación y automatización</h4>
+            <ul><li>Eliminar errores, tratar nulos, cambiar tipos de datos y estandarizar campos.</li><li>Combinar tablas con <code>Merge</code>, unir datasets con <code>Append</code> y automatizar procesos ETL.</li><li>Uso de columnas personalizadas, parámetros y funciones reutilizables.</li></ul>
+          </div>
+        </div>
+        <div class="timeline-step">
+          <div class="t-num">3</div>
+          <div class="t-body">
+            <div class="t-pills"><span class="t-pill">Modelo estrella</span><span class="t-pill">Relaciones</span><span class="t-pill">Calendario</span></div>
+            <h4>Modelado de datos para Business Intelligence</h4>
+            <ul><li>Diseño de tablas de hechos y dimensiones con enfoque de modelo estrella.</li><li>Relaciones, cardinalidad, dirección del filtro y tabla calendario.</li><li>Buenas prácticas para construir modelos confiables y escalables.</li></ul>
+          </div>
+        </div>
+        <div class="timeline-step">
+          <div class="t-num">4</div>
+          <div class="t-body">
+            <div class="t-pills"><span class="t-pill">DAX</span><span class="t-pill">Medidas</span><span class="t-pill">Time Intelligence</span></div>
+            <h4>DAX para el cálculo analítico</h4>
+            <ul><li>Diferencia entre columnas calculadas y medidas. Contexto de fila y filtro.</li><li>Funciones como <code>SUM</code>, <code>DIVIDE</code>, <code>CALCULATE</code>, <code>FILTER</code> y <code>VAR</code>.</li><li>Medidas para acumulados, variaciones y análisis por periodos.</li></ul>
+          </div>
+        </div>
+        <div class="timeline-step">
+          <div class="t-num">5</div>
+          <div class="t-body">
+            <div class="t-pills"><span class="t-pill">Dashboards</span><span class="t-pill">Service</span><span class="t-pill" style="background:#F5F3FF;color:#5B21B6;border-color:#DDD6FE">IA</span></div>
+            <h4>Dashboards ejecutivos, publicación e integración con IA</h4>
+            <ul><li>Diseño de dashboards con KPIs, segmentadores, navegación y storytelling con datos.</li><li>Publicación en Power BI Service y buenas prácticas de entrega.</li><li>Uso de ChatGPT y Claude para apoyar DAX, transformaciones y documentación analítica.</li></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="two-col" style="align-items:start;margin-bottom:36px;">
+      <div class="form-wrap">
+        <section id="pbi-inscripcion" class="form-card">
+          <div class="form-title">📝 Formulario de inscripción</div>
+          <div class="form-subtitle">Completá tu inscripción en el formulario oficial de CICAPY.</div>
+          <a class="btn btn-green btn-full" href="https://cicapy.github.io/incripciones_2026/" target="_blank" rel="noopener">✏️ Inscribirme ahora</a>
+          <p style="text-align:center;font-size:13px;color:var(--slate-500);margin-top:14px;line-height:1.6;">Todas las inscripciones se gestionan desde el formulario oficial de CICAPY.</p>
+        </section>
+      </div>
+      <div>
+        <div class="inner-card" style="margin-bottom:16px;">
+          <h2>🏦 Datos de pago — Transferencia Itaú</h2>
+          <div class="payment-card" style="margin-top:12px;" id="datos-transferencia-wrap">
+            <div id="datos-transferencia">
+              <div class="pay-row"><span class="pay-label">Banco</span><span class="pay-val"><span data-copy="banco">Itaú</span></span></div>
+              <div class="pay-row"><span class="pay-label">Cta. N°</span><span class="pay-val"><span data-copy="cta">720005407</span><button type="button" data-target="cta" class="btn-copy">Copiar</button></span></div>
+              <div class="pay-row"><span class="pay-label">Titular</span><span class="pay-val"><span data-copy="titular">Oscar Gonzalez Frutos</span><button type="button" data-target="titular" class="btn-copy">Copiar</button></span></div>
+              <div class="pay-row"><span class="pay-label">CI / Alias</span><span class="pay-val"><span data-copy="ci">3584172</span><button type="button" data-target="ci" class="btn-copy">Copiar</button></span></div>
+            </div>
+            <button type="button" class="btn-copy-all" data-copy-all="#datos-transferencia">📋 Copiar todos los datos</button>
+          </div>
+        </div>
+        <div class="inner-card">
+          <h2>💳 Tarjeta de crédito / débito</h2>
+          <p style="font-size:14px;color:var(--slate-600);line-height:1.6;margin-bottom:14px;">Podés abonar mediante POS virtual. Solicitá el enlace de pago por WhatsApp.</p>
+          <a class="btn btn-green btn-sm" href="https://wa.me/595983352932?text=Hola%21+quiero+el+link+de+pago+(POS+virtual)+para+inscribirme." target="_blank" rel="noopener">💬 Solicitar link</a>
+          <p style="font-size:13px;color:var(--slate-500);margin-top:14px;">✅ Enviá el comprobante al <strong>0983 352 932</strong> para confirmar tu inscripción.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <h2 style="font-family:var(--font-display);font-size:22px;font-weight:800;color:var(--slate-900);margin-bottom:20px;text-align:center;">👨‍🏫 Capacitador del Curso</h2>
+    <div class="instructor-card" style="margin-bottom: 40px;">
+      <div class="instructor-left">
+        <img class="instructor-photo" src="foto.jpg" alt="Foto del capacitador" onerror="this.src='https://via.placeholder.com/130x130?text=Prof'">
+        <div class="instructor-name">Oscar González Frutos</div>
+        <div class="instructor-role">Docente & Director Académico</div>
+        <div class="inst-social">
+          <a class="inst-social-btn" href="https://oscar-pry.github.io/web_personal/" target="_blank" rel="noopener">🌐 Web</a>
+          <a class="inst-social-btn" href="https://www.linkedin.com/in/oscar-gonz%C3%A1lez-frutos" target="_blank" rel="noopener">🔗 LinkedIn</a>
+        </div>
+      </div>
+      <div class="instructor-right">
+        <span class="section-label">Docente Principal</span>
+        <h2>Más de 10 años formando profesionales en datos</h2>
+        <p>Estadístico, analista y docente apasionado por transformar la manera en que las personas trabajan con datos. Combina rigor académico de nivel internacional con una metodología práctica y orientada a resultados.</p>
+        <div class="cred-grid">
+          <div class="cred-item"><div class="cred-label">Licenciatura</div><div class="cred-value">Matemática Estadística · FACEN-UNA</div></div>
+          <div class="cred-item"><div class="cred-label">Maestría (MSc)</div><div class="cred-value">Estadística Aplicada · Univ. de Granada, España</div></div>
+        </div>
+        <div class="exp-chips" style="margin-top:14px;">
+          <span class="exp-chip">BCP</span><span class="exp-chip">Itaipú Binacional</span><span class="exp-chip">DGEEC</span>
+          <span class="exp-chip">MEC</span><span class="exp-chip">FACEN-UNA</span><span class="exp-chip">Min. Desarrollo Social</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <h2 style="font-family:var(--font-display);font-size:22px;font-weight:800;color:var(--slate-900);margin-bottom:20px;text-align:center;">📸 Galería de capacitaciones</h2>
+    <div class="gallery-grid" style="margin-bottom:40px;">
+      <img src="images/f1.jpg" alt="Capacitación 1"><img src="images/f2.jpg" alt="Capacitación 2">
+      <img src="images/f3.jpg" alt="Capacitación 3"><img src="images/f4.jpg" alt="Capacitación 4">
+      <img src="images/f5.jpg" alt="Capacitación 5"><img src="images/f6.jpg" alt="Capacitación 6">
+      <img src="images/f7.jpg" alt="Capacitación 7"><img src="images/f8.jpg" alt="Capacitación 8">
+    </div>
+
+    <div class="divider"></div>
+    <h2 style="font-family:var(--font-display);font-size:22px;font-weight:800;color:var(--slate-900);margin-bottom:8px;text-align:center;">📊 Dashboards creados en clase</h2>
+    <p style="text-align:center;font-size:14.5px;color:var(--slate-500);margin-bottom:24px;">Reportes interactivos construidos durante las sesiones de Power BI.</p>
+    <div class="dashboards-grid">
+      <div class="dashboard-card">
+        <div class="video-wrap"><iframe title="modelo_estrella_medidas_informe" src="https://app.powerbi.com/view?r=eyJrIjoiODExN2ZmNDUtYTg4OS00MGU5LTljMGQtNDFlMTVlZTQ4NzlhIiwidCI6IjBiNjk2MDAyLWQ2YTYtNDI2Ni04OTI4LTE1ZWQ4ZDA2NDQxMCIsImMiOjR9" frameborder="0" allowfullscreen loading="lazy"></iframe></div>
+        <div class="dash-body"><h4>Dashboard de Ventas – Modelo Estrella</h4><p>Medidas DAX, segmentadores y análisis por categoría.</p></div>
+      </div>
+      <div class="dashboard-card">
+        <div class="video-wrap"><iframe title="Informe_Ventas_Final" src="https://app.powerbi.com/view?r=eyJrIjoiMGM4ZjAxZWYtMzkwNS00ZWRjLWI5YjktMzE1MzE4ZmI2YTQ2IiwidCI6IjBiNjk2MDAyLWQ2YTYtNDI2Ni04OTI4LTE1ZWQ4ZDA2NDQxMCIsImMiOjR9" frameborder="0" allowfullscreen loading="lazy"></iframe></div>
+        <div class="dash-body"><h4>Informe de Ventas Final</h4><p>KPIs, tendencias y comparativa entre períodos.</p></div>
+      </div>
+    </div>
+  </div>
+</div><div id="excel" class="tab-content">
+  <section class="inner-hero">
+    <div class="inner-hero-inner inner-hero-split">
+      <div class="inner-hero-text">
+        <div class="inner-badge">📗 Excel Avanzado</div>
+        <h1 class="inner-title">Análisis de Datos Moderno con Excel:<br>Power Query + Power Pivot</h1>
+        <p class="inner-sub">Programa intensivo de 7 sesiones para construir modelos confiables, automatizar la limpieza de datos y crear dashboards accionables por sector.</p>
+        <div class="inner-tags">
+          <span class="inner-tag">Finanzas</span><span class="inner-tag">Marketing</span>
+          <span class="inner-tag">Tecnología</span><span class="inner-tag">Educación</span>
+          <span class="inner-tag">Power Query</span><span class="inner-tag">Power Pivot</span>
+        </div>
+      </div>
+      <div class="inner-hero-logo">
+        <img src="https://static.vecteezy.com/system/resources/previews/027/179/360/non_2x/microsoft-excel-icon-logo-symbol-free-png.png">
+      </div>
+    </div>
+  </section>
+
+  <div class="inner-content">
+    <div class="inner-grid">
+      <div class="inner-card">
+        <h2>⚙️ Metodología</h2>
+        <ul class="inner-card-list">
+          <li>Clases en vivo por Zoom + grabaciones on-demand.</li>
+          <li>Aprendizaje hands-on con datasets reales por sector.</li>
+          <li>Proyecto guiado: extracción → modelado → dashboard.</li>
+          <li>Soporte y asesoría personalizada durante el curso.</li>
+        </ul>
+      </div>
+      <div class="inner-card">
+        <h2>📅 Modalidad</h2>
+        <ul class="inner-card-list">
+          <li>Sincrónica y asincrónica.</li>
+          <li>7 sesiones × 120 minutos cada una.</li>
+          <li>Incluye certificado y repositorio de recursos.</li>
+          <li>Casos por sector: Finanzas, Marketing, Tecnología, Educación.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="inner-card" style="margin-bottom:28px;">
+      <h2 style="margin-bottom:20px;">📚 Programa — 7 sesiones</h2>
+      <div class="timeline">
+        <div class="timeline-step"><div class="t-num">1</div><div class="t-body"><div class="t-pills"><span class="t-pill">Fórmulas</span><span class="t-pill">Funciones</span><span class="t-pill">Eficiencia</span></div><h4>Excel Básico I: Fundamentos y fórmulas esenciales</h4><p>Fórmulas avanzadas, referencias absolutas/mixtas, funciones de búsqueda y referencia. Fundamentos para el análisis de datos en Excel.</p></div></div>
+        <div class="timeline-step"><div class="t-num">2</div><div class="t-body"><div class="t-pills"><span class="t-pill">Tablas dinámicas</span><span class="t-pill">Filtros</span><span class="t-pill">Gráficos</span></div><h4>Excel Básico II: Tablas dinámicas y visualización</h4><p>Tablas dinámicas avanzadas, slicers, gráficos dinámicos y dashboards básicos. Técnicas de limpieza y formato de datos.</p></div></div>
+        <div class="timeline-step"><div class="t-num">3</div><div class="t-body"><div class="t-pills"><span class="t-pill">Power Query</span><span class="t-pill">ETL</span><span class="t-pill">Transformación</span></div><h4>Power Query I: Importación y transformación de datos</h4><p>Conectar a múltiples fuentes, transformar, limpiar y combinar datos automáticamente. Editor de Power Query, tipos de datos y pasos aplicados.</p></div></div>
+        <div class="timeline-step"><div class="t-num">4</div><div class="t-body"><div class="t-pills"><span class="t-pill">Merge</span><span class="t-pill">Append</span><span class="t-pill">Lenguaje M</span></div><h4>Power Query II: Consultas avanzadas y automatización</h4><p>Combinar y anexar tablas, columnas condicionales, parámetros de consulta e introducción al lenguaje M para transformaciones personalizadas.</p></div></div>
+        <div class="timeline-step"><div class="t-num">5</div><div class="t-body"><div class="t-pills"><span class="t-pill">Power Pivot</span><span class="t-pill">Modelo datos</span><span class="t-pill">Relaciones</span></div><h4>Power Pivot: Modelo de datos y relaciones</h4><p>Creación de modelos de datos relacionales en Excel. Relaciones entre tablas, tabla calendario y modelo estrella adaptado a Excel.</p></div></div>
+        <div class="timeline-step"><div class="t-num">6</div><div class="t-body"><div class="t-pills"><span class="t-pill">DAX</span><span class="t-pill">Medidas</span><span class="t-pill">KPIs</span></div><h4>DAX en Excel: Medidas y KPIs con Power Pivot</h4><p>Medidas calculadas con DAX: <code>SUMX</code>, <code>CALCULATE</code>, <code>RELATED</code>, <code>DATEADD</code>. Diferencias con columnas calculadas y buenas prácticas.</p></div></div>
+        <div class="timeline-step"><div class="t-num">7</div><div class="t-body"><div class="t-pills"><span class="t-pill">Dashboard</span><span class="t-pill">Proyecto final</span><span class="t-pill">Presentación</span></div><h4>Dashboard integral y proyecto final</h4><p>Integración de todo el flujo: Power Query → Power Pivot → Tablas dinámicas → Dashboard ejecutivo. Presentación de proyecto real por sector de cada participante.</p></div></div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:36px;">
+      <a class="btn btn-green" href="https://cicapy.github.io/incripciones_2026/" target="_blank" rel="noopener">✏️ Inscribirme en Excel</a>
+      <a class="btn btn-outline-blue" href="https://wa.me/595983352932?text=Hola%21+Quiero+informaci%C3%B3n+del+curso+de+Excel." target="_blank" rel="noopener">💬 Consultar por WhatsApp</a>
+    </div>
+
+    <div class="divider"></div>
+    <h2 style="font-family:var(--font-display);font-size:22px;font-weight:800;color:var(--slate-900);margin-bottom:20px;text-align:center;">👨‍🏫 Capacitador del Curso</h2>
+    <div class="instructor-card" style="margin-bottom: 40px;">
+      <div class="instructor-left">
+        <img class="instructor-photo" src="foto.jpg" alt="Foto del capacitador" onerror="this.src='https://via.placeholder.com/130x130?text=Prof'">
+        <div class="instructor-name">Oscar González Frutos</div>
+        <div class="instructor-role">Docente & Director Académico</div>
+        <div class="inst-social">
+          <a class="inst-social-btn" href="https://oscar-pry.github.io/web_personal/" target="_blank" rel="noopener">🌐 Web</a>
+          <a class="inst-social-btn" href="https://www.linkedin.com/in/oscar-gonz%C3%A1lez-frutos" target="_blank" rel="noopener">🔗 LinkedIn</a>
+        </div>
+      </div>
+      <div class="instructor-right">
+        <span class="section-label">Docente Principal</span>
+        <h2>Más de 10 años formando profesionales en datos</h2>
+        <p>Estadístico, analista y docente apasionado por transformar la manera en que las personas trabajan con datos. Combina rigor académico de nivel internacional con una metodología práctica y orientada a resultados.</p>
+        <div class="cred-grid">
+          <div class="cred-item"><div class="cred-label">Licenciatura</div><div class="cred-value">Matemática Estadística · FACEN-UNA</div></div>
+          <div class="cred-item"><div class="cred-label">Maestría (MSc)</div><div class="cred-value">Estadística Aplicada · Univ. de Granada, España</div></div>
+        </div>
+        <div class="exp-chips" style="margin-top:14px;">
+          <span class="exp-chip">BCP</span><span class="exp-chip">Itaipú Binacional</span><span class="exp-chip">DGEEC</span>
+          <span class="exp-chip">MEC</span><span class="exp-chip">FACEN-UNA</span><span class="exp-chip">Min. Desarrollo Social</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <h2 style="font-family:var(--font-display);font-size:20px;font-weight:800;color:var(--slate-900);margin-bottom:20px;text-align:center;">📸 Galería de capacitaciones</h2>
+    <div class="gallery-grid">
+      <img src="images/curso1.jpg" alt="Curso 1"><img src="images/curso2.jpg" alt="Curso 2">
+      <img src="images/curso3.jpg" alt="Curso 3"><img src="images/curso4.jpg" alt="Curso 4">
+      <img src="images/curso5.jpg" alt="Curso 5"><img src="images/curso6.jpg" alt="Curso 6">
+      <img src="images/curso7.jpg" alt="Curso 7">
+    </div>
+  </div>
+</div><div id="sql" class="tab-content">
+  <section class="inner-hero">
+    <div class="inner-hero-inner inner-hero-split">
+      <div class="inner-hero-text">
+        <div class="inner-badge">🗄️ Bases de Datos</div>
+        <h1 class="inner-title">SQL para Business Intelligence y Analítica de Datos + IA</h1>
+        <p class="inner-sub">Aprendé a consultar, filtrar, agrupar y analizar datos con MySQL e Inteligencia Artificial aplicada con ChatGPT y Claude.</p>
+        <div class="inner-tags">
+          <span class="inner-tag">MySQL</span><span class="inner-tag">IA aplicada</span>
+          <span class="inner-tag">ChatGPT & Claude</span><span class="inner-tag">SELECT & JOINs</span>
+          <span class="inner-tag">GROUP BY</span>
+        </div>
+      </div>
+      <div class="inner-hero-logo">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original-wordmark.svg" alt="Logo MySQL">
+      </div>
+    </div>
+  </section>
+
+  <div class="inner-content">
+    <div class="inner-grid">
+      <div class="inner-card">
+        <h2>⚙️ Metodología</h2>
+        <ul class="inner-card-list">
+          <li>Clases en vivo por Zoom + acceso a grabaciones.</li>
+          <li>Práctica con bases de datos reales desde la sesión 1.</li>
+          <li>Ejercicios guiados y desafíos de consultas por nivel.</li>
+          <li>Proyectos aplicados a casos de negocio concretos.</li>
+          <li>Uso de ChatGPT y Claude para escribir, depurar y optimizar consultas.</li>
+          <li>Soporte personalizado y material descargable completo.</li>
+        </ul>
+      </div>
+      <div class="inner-card">
+        <h2>📅 Modalidad</h2>
+        <ul class="inner-card-list">
+          <li><strong>Días:</strong> Sábados</li>
+          <li><strong>Horario:</strong> 09:30 – 11:30 hs</li>
+          <li><strong>Duración:</strong> 6 sesiones × 2 horas</li>
+          <li>Modalidad online en vivo vía Zoom</li>
+          <li>Zona horaria: GMT-3 (Paraguay)</li>
+          <li>Certificado incluido al finalizar</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="inner-card" style="margin-bottom:28px;">
+      <h2 style="margin-bottom:16px;">💻 ¿Qué vas a poder hacer?</h2>
+      <div class="code-block">
+<span class="cm">-- Análisis de ventas por categoría y período</span>
+<span class="kw">SELECT</span>
+  c.nombre_categoria,
+  <span class="fn">DATE_FORMAT</span>(v.fecha, <span class="str">'%Y-%m'</span>) <span class="kw">AS</span> periodo,
+  <span class="fn">COUNT</span>(v.id) <span class="kw">AS</span> total_ventas,
+  <span class="fn">SUM</span>(v.monto) <span class="kw">AS</span> ingresos,
+  <span class="fn">ROUND</span>(<span class="fn">AVG</span>(v.monto), 2) <span class="kw">AS</span> ticket_promedio
+<span class="kw">FROM</span> ventas v
+<span class="kw">INNER JOIN</span> categorias c <span class="kw">ON</span> v.categoria_id = c.id
+<span class="kw">WHERE</span> v.fecha <span class="kw">BETWEEN</span> <span class="str">'2025-01-01'</span> <span class="kw">AND</span> <span class="str">'2025-12-31'</span>
+<span class="kw">GROUP BY</span> c.nombre_categoria, periodo
+<span class="kw">HAVING</span> ingresos > 500000
+<span class="kw">ORDER BY</span> ingresos <span class="kw">DESC</span>;
+      </div>
+    </div>
+
+    <div class="inner-card" style="margin-bottom:28px;">
+      <h2 style="margin-bottom:14px;">🎯 ¿A quién va dirigido?</h2>
+      <div class="feature-grid">
+        <div class="feature-card"><h4>Analistas y reportistas</h4><ul><li>Que quieren acceder directamente a los datos sin depender de TI</li><li>Para construir consultas propias y exportar hacia Excel o Power BI</li></ul></div>
+        <div class="feature-card"><h4>Profesionales de negocios</h4><ul><li>Finanzas, marketing, RRHH, operaciones y ventas</li><li>Que manejan grandes volúmenes de datos en bases relacionales</li></ul></div>
+        <div class="feature-card"><h4>Desarrolladores junior</h4><ul><li>Que necesitan fortalecer sus habilidades SQL para proyectos de data</li><li>Consultas optimizadas e integración con herramientas de BI</li></ul></div>
+        <div class="feature-card"><h4>Usuarios de Power BI y Excel</h4><ul><li>Que quieren conectar directamente desde SQL a sus reportes</li><li>Para automatizar la extracción de datos desde bases corporativas</li></ul></div>
+      </div>
+    </div>
+
+    <div class="inner-card" style="margin-bottom:28px;">
+      <h2 style="margin-bottom:20px;">📚 Programa </h2>
+      <div class="timeline">
+        <div class="timeline-step">
+          <div class="t-num">1</div>
+          <div class="t-body">
+            <div class="t-pills"><span class="t-pill">Fundamentos</span><span class="t-pill">MySQL</span><span class="t-pill">DDL</span></div>
+            <h4>Introducción a bases de datos y SQL</h4>
+            <ul><li>¿Qué es una base de datos relacional y para qué sirve SQL?</li><li>Instalación y configuración de MySQL Workbench.</li><li>Tipos de datos, creación de tablas con <code>CREATE TABLE</code> y estructura de una base de datos.</li><li>Inserción de registros con <code>INSERT INTO</code>.</li></ul>
+          </div>
+        </div>
+        <div class="timeline-step">
+          <div class="t-num">2</div>
+          <div class="t-body">
+            <div class="t-pills"><span class="t-pill">SELECT</span><span class="t-pill">WHERE</span><span class="t-pill">Filtros</span></div>
+            <h4>Consultas básicas: SELECT, WHERE y operadores</h4>
+            <ul><li>Sintaxis de <code>SELECT</code>, <code>FROM</code> y <code>WHERE</code>.</li><li>Operadores de comparación, lógicos (<code>AND</code>, <code>OR</code>, <code>NOT</code>) y <code>BETWEEN</code>, <code>IN</code>, <code>LIKE</code>.</li><li>Ordenamiento con <code>ORDER BY</code> y limitación con <code>LIMIT</code>.</li><li>Alias de columnas y tablas con <code>AS</code>.</li></ul>
+          </div>
+        </div>
+        <div class="timeline-step">
+          <div class="t-num">3</div>
+          <div class="t-body">
+            <div class="t-pills"><span class="t-pill">GROUP BY</span><span class="t-pill">Funciones</span><span class="t-pill">HAVING</span></div>
+            <h4>Agregaciones y funciones de resumen</h4>
+            <ul><li>Funciones de agregación: <code>COUNT</code>, <code>SUM</code>, <code>AVG</code>, <code>MIN</code>, <code>MAX</code>.</li><li>Agrupamiento con <code>GROUP BY</code> y filtrado de grupos con <code>HAVING</code>.</li><li>Funciones de cadena, fecha y numéricas: <code>CONCAT</code>, <code>DATE_FORMAT</code>, <code>ROUND</code>, <code>YEAR</code>.</li></ul>
+          </div>
+        </div>
+        <div class="timeline-step">
+          <div class="t-num">4</div>
+          <div class="t-body">
+            <div class="t-pills"><span class="t-pill">INNER JOIN</span><span class="t-pill">LEFT JOIN</span><span class="t-pill">Relaciones</span></div>
+            <h4>Combinación de tablas con JOINs</h4>
+            <ul><li>Concepto de relaciones entre tablas y claves foráneas.</li><li><code>INNER JOIN</code>, <code>LEFT JOIN</code>, <code>RIGHT JOIN</code> y diferencias prácticas.</li><li>Consultas con múltiples tablas: clientes, pedidos, productos.</li><li>Buenas prácticas para consultas eficientes con JOINs.</li></ul>
+          </div>
+        </div>
+        <div class="timeline-step">
+          <div class="t-num">5</div>
+          <div class="t-body">
+            <div class="t-pills"><span class="t-pill">Subconsultas</span><span class="t-pill">CTEs</span><span class="t-pill">WITH</span></div>
+            <h4>Subconsultas, CTEs y consultas avanzadas</h4>
+            <ul><li>Subconsultas en <code>WHERE</code>, <code>FROM</code> y <code>SELECT</code>.</li><li>Expresiones de tabla comunes (CTEs) con <code>WITH</code> para consultas legibles.</li><li>Uso de <code>CASE WHEN</code> para lógica condicional dentro de consultas.</li><li>Funciones de ventana: <code>ROW_NUMBER()</code>, <code>RANK()</code>, <code>LAG()</code>.</li></ul>
+          </div>
+        </div>
+        <div class="timeline-step">
+          <div class="t-num">6</div>
+          <div class="t-body">
+            <div class="t-pills"><span class="t-pill">Proyecto</span><span class="t-pill">Power BI</span><span class="t-pill">Integración</span></div>
+            <h4>Proyecto final e integración con Power BI</h4>
+            <ul><li>Análisis completo de un dataset empresarial real usando SQL.</li><li>Conexión de MySQL con Power BI Desktop para visualizar directamente los resultados.</li><li>Exportación de consultas a Excel y automatización de reportes.</li><li>Presentación de proyecto final por cada participante.</li></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <h2 style="font-family:var(--font-display);font-size:22px;font-weight:800;color:var(--slate-900);margin-bottom:20px;text-align:center;">👨‍🏫 Capacitador del Curso</h2>
+    <div class="instructor-card" style="margin-bottom: 40px;">
+      <div class="instructor-left">
+        <img class="instructor-photo" src="foto.jpg" alt="Foto del capacitador" onerror="this.src='https://via.placeholder.com/130x130?text=Prof'">
+        <div class="instructor-name">Oscar González Frutos</div>
+        <div class="instructor-role">Docente & Director Académico</div>
+        <div class="inst-social">
+          <a class="inst-social-btn" href="https://oscar-pry.github.io/web_personal/" target="_blank" rel="noopener">🌐 Web</a>
+          <a class="inst-social-btn" href="https://www.linkedin.com/in/oscar-gonz%C3%A1lez-frutos" target="_blank" rel="noopener">🔗 LinkedIn</a>
+        </div>
+      </div>
+      <div class="instructor-right">
+        <span class="section-label">Docente Principal</span>
+        <h2>Más de 10 años formando profesionales en datos</h2>
+        <p>Estadístico, analista y docente apasionado por transformar la manera en que las personas trabajan con datos. Combina rigor académico de nivel internacional con una metodología práctica y orientada a resultados.</p>
+        <div class="cred-grid">
+          <div class="cred-item"><div class="cred-label">Licenciatura</div><div class="cred-value">Matemática Estadística · FACEN-UNA</div></div>
+          <div class="cred-item"><div class="cred-label">Maestría (MSc)</div><div class="cred-value">Estadística Aplicada · Univ. de Granada, España</div></div>
+        </div>
+        <div class="exp-chips" style="margin-top:14px;">
+          <span class="exp-chip">BCP</span><span class="exp-chip">Itaipú Binacional</span><span class="exp-chip">DGEEC</span>
+          <span class="exp-chip">MEC</span><span class="exp-chip">FACEN-UNA</span><span class="exp-chip">Min. Desarrollo Social</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="inner-card" style="text-align:center;padding:36px;">
+      <h2 style="margin-bottom:10px;">📝 ¿Listo para dominar SQL?</h2>
+      <p style="font-size:15px;color:var(--slate-500);max-width:500px;margin:0 auto 24px;line-height:1.65;">Inscribite al curso de SQL + IA y comenzá a extraer el máximo valor de tus datos directamente desde la fuente.</p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+        <a class="btn btn-green" href="https://cicapy.github.io/incripciones_2026/" target="_blank" rel="noopener">✏️ Inscribirme en SQL + IA</a>
+        <a class="btn btn-outline-blue" href="https://wa.me/595983352932?text=Hola%21+Quiero+informaci%C3%B3n+del+curso+de+SQL." target="_blank" rel="noopener">💬 Consultar por WhatsApp</a>
+      </div>
+
+      <div class="divider" style="margin:32px 0 24px;"></div>
+      <div style="background:var(--slate-50);border:1px solid var(--slate-200);border-radius:var(--radius-lg);padding:22px;text-align:left;max-width:420px;margin:0 auto;">
+        <h3 style="font-family:var(--font-display);font-size:15px;font-weight:700;color:var(--slate-900);margin-bottom:16px;">🏦 Datos de pago — Transferencia Itaú</h3>
+        <div class="pay-row"><span class="pay-label">Banco</span><span class="pay-val">Itaú</span></div>
+        <div class="pay-row"><span class="pay-label">Cta. N°</span><span class="pay-val"><span>720005407</span><button type="button" onclick="copiarTexto('720005407',this)" class="btn-copy">Copiar</button></span></div>
+        <div class="pay-row"><span class="pay-label">Titular</span><span class="pay-val"><span>Oscar Gonzalez Frutos</span></span></div>
+        <div class="pay-row"><span class="pay-label">CI / Alias</span><span class="pay-val"><span>3584172</span><button type="button" onclick="copiarTexto('3584172',this)" class="btn-copy">Copiar</button></span></div>
+        <p style="font-size:12.5px;color:var(--slate-500);margin-top:14px;">Enviá el comprobante al <a href="https://wa.me/595983352932" target="_blank" rel="noopener" style="color:var(--green-600);font-weight:600;">0983 352 932</a> para confirmar.</p>
+      </div>
+    </div>
+
+  </div>
+</div><div id="copy-toast" role="status" aria-live="polite">¡Copiado!</div>
+
+<div id="modal-confirmacion" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
+  <div class="modal-inner">
+    <div class="modal-icon">✅</div>
+    <h3 id="modal-titulo">¡Inscripción enviada!</h3>
+    <p>Tu inscripción fue registrada correctamente.<br>En breve recibirás confirmación por correo o WhatsApp.</p>
+    <button id="btn-cerrar-modal">Cerrar</button>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---- TABS ---- */
+  function openTab(e, tabName) {
+    document.querySelectorAll('.tab-content').forEach(function(tc){ tc.classList.remove('active'); });
+    document.querySelectorAll('.nav-tab').forEach(function(t){ t.classList.remove('active'); });
+    var target = document.getElementById(tabName);
+    if (target) target.classList.add('active');
+    if (e && e.currentTarget) e.currentTarget.classList.add('active');
+    if (window.innerWidth <= 768) {
+      var tabs = document.getElementById('nav-tabs');
+      tabs.classList.remove('mobile-open');
     }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.location.hash = tabName;
+  }
+  window.openTab = openTab;
 
-    function setLoading(on) {
-      btn.disabled  = on;
-      spinner.style.display = on ? 'block' : 'none';
-      btnText.style.display = on ? 'none' : 'flex';
-      btnText.style.alignItems = 'center';
-      btnText.style.gap = '9px';
-    }
-
-    function markInvalid(el) {
-      el.classList.add('invalid');
-      el.addEventListener('input', function () { el.classList.remove('invalid'); }, { once: true });
-    }
-
-    function validate() {
-      var ok = true;
-      ['nombre','apellido','email','telefono'].forEach(function (name) {
-        var el = form[name];
-        if (!el.value.trim() || (name === 'email' && !el.value.includes('@'))) {
-          markInvalid(el);
-          ok = false;
+  window.addEventListener('load', function(){
+    var hash = window.location.hash.replace('#','');
+    if (hash) {
+      var tabs = ['inicio','servicios','verano','taller','powerbi','excel','sql'];
+      if (tabs.indexOf(hash) !== -1) {
+        var btn = document.querySelector('.nav-tab[onclick*="' + hash + '"]');
+        if (btn) {
+          document.querySelectorAll('.tab-content').forEach(function(tc){ tc.classList.remove('active'); });
+          document.querySelectorAll('.nav-tab').forEach(function(t){ t.classList.remove('active'); });
+          var t = document.getElementById(hash);
+          if (t) t.classList.add('active');
+          btn.classList.add('active');
         }
-      });
-      return ok;
-    }
-
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      if (btn.disabled) return;
-
-      if (!validate()) {
-        msg.style.color = '#e07070';
-        msg.textContent = '⚠️ Completá todos los campos obligatorios.';
-        return;
       }
+    }
+  });
 
-      setLoading(true);
-      msg.style.color = 'rgba(255,255,255,.45)';
-      msg.textContent = 'Enviando inscripción…';
+  /* ---- MOBILE MENU ---- */
+  var mobileBtn = document.getElementById('mobile-menu-btn');
+  var navTabs = document.getElementById('nav-tabs');
+  if (mobileBtn) {
+    mobileBtn.addEventListener('click', function(){
+      navTabs.classList.toggle('mobile-open');
+    });
+  }
 
+  /* ---- NAVBAR SCROLL ---- */
+  window.addEventListener('scroll', function(){
+    var nb = document.getElementById('navbar');
+    if (nb) nb.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  /* ---- SMOOTH SCROLL FOR ANCHOR LINKS ---- */
+  document.addEventListener('click', function(e){
+    var anchor = e.target.closest('a[href^="#"]');
+    if (!anchor) return;
+    var targetId = anchor.getAttribute('href').slice(1);
+    var dest = document.getElementById(targetId);
+    if (!dest) return;
+    e.preventDefault();
+    var top = dest.getBoundingClientRect().top + window.pageYOffset - 80;
+    window.scrollTo({ top: top, behavior: 'smooth' });
+  });
+
+  /* ---- COPY TOAST ---- */
+  var toast = document.getElementById('copy-toast');
+  var toastTimer;
+  function showToast(msg){
+    if (!toast) return;
+    toast.textContent = msg || '¡Copiado!';
+    toast.style.display = 'block';
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toast.style.display = 'none'; }, 1400);
+  }
+  function copiarTexto(texto, btn){
+    var cb = function(){
+      showToast('¡Copiado!');
+      if (btn) { var orig = btn.textContent; btn.textContent = '¡Listo!'; setTimeout(function(){ btn.textContent = orig; }, 1200); }
+    };
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(texto).then(cb);
+    } else {
+      var ta = document.createElement('textarea');
+      ta.value = texto; document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); } catch(err){}
+      document.body.removeChild(ta); cb();
+    }
+  }
+  window.copiarTexto = copiarTexto;
+
+  document.querySelectorAll('.btn-copy[data-target]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var key = btn.getAttribute('data-target');
+      var span = document.querySelector('[data-copy="' + key + '"]');
+      if (span) copiarTexto(span.textContent.trim(), btn);
+    });
+  });
+
+  document.querySelectorAll('[data-copy-all]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var selector = btn.getAttribute('data-copy-all');
+      var cont = document.querySelector(selector);
+      if (!cont) return;
+      var pares = Array.from(cont.querySelectorAll('[data-copy]')).map(function(s){
+        var li = s.closest('.pay-row');
+        var label = li ? li.querySelector('.pay-label').textContent.trim() : 'Dato';
+        return label + ': ' + s.textContent.trim();
+      });
+      copiarTexto(pares.join('\n'), btn);
+    });
+  });
+
+  /* ---- FORM SUBMISSION ---- */
+  var APPS_URL = 'https://script.google.com/macros/s/AKfycbws0FfKtWvkcArK6-pmu45jO01M0cPOpif2Ya0nej8Vk1dPXNF0QOj5Q6e61kzdZgT3/exec';
+  var form   = document.getElementById('form-insc');
+  var btnEnv = document.getElementById('btn-enviar');
+  var msgEl  = document.getElementById('msg-insc');
+  var modal  = document.getElementById('modal-confirmacion');
+
+  function genID(){ return 'SUB-' + Date.now() + '-' + Math.floor(Math.random()*9999); }
+
+  if (form) {
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      if (btnEnv.disabled) return;
+      btnEnv.disabled = true;
+      if (msgEl) { msgEl.textContent = '⏳ Enviando...'; msgEl.style.color = '#334155'; }
       var fd = new FormData();
-      fd.append('unique_id',      generarID());
-      fd.append('nombre',         form.nombre.value.trim());
-      fd.append('apellido',       form.apellido.value.trim());
-      fd.append('email',          form.email.value.trim());
-      fd.append('telefono',       form.telefono.value.trim());
-      fd.append('comentarios',    form.comentarios.value.trim());
-      fd.append('Cursos',         'Power BI para Business Intelligence y Analítica de Datos');
+      fd.append('unique_id',   genID());
+      fd.append('nombre',      form.nombre.value.trim());
+      fd.append('apellido',    form.apellido.value.trim());
+      fd.append('email',       form.email.value.trim());
+      fd.append('telefono',    form.telefono.value.trim());
+      fd.append('comentarios', form.comentarios.value.trim());
+      fd.append('Cursos',      'Power BI para Business Intelligence y Analítica de Datos');
       fd.append('CantidadCursos', '1');
-      fd.append('Promoción',      'No');
-
-      fetch(APPS_SCRIPT_URL, { method: 'POST', body: fd, mode: 'no-cors' })
-        .then(function () {
-          msg.textContent = '';
+      fd.append('Promoción',   'No');
+      fetch(APPS_URL, { method: 'POST', body: fd, mode: 'no-cors' })
+        .then(function(){
+          if (msgEl) msgEl.textContent = '';
           form.reset();
-          modal.classList.add('show');
+          if (modal) modal.classList.add('show');
         })
-        .catch(function (err) {
-          console.error(err);
-          msg.style.color = '#e07070';
-          msg.textContent = '❌ Error al enviar. Por favor intentá nuevamente.';
+        .catch(function(){
+          if (msgEl) { msgEl.textContent = '❌ Error al enviar. Probá nuevamente.'; msgEl.style.color = '#DC2626'; }
         })
-        .finally(function () {
-          setLoading(false);
+        .finally(function(){
+          setTimeout(function(){ if (btnEnv) btnEnv.disabled = false; }, 3000);
         });
     });
+  }
 
-    // Cerrar modal
-    document.getElementById('btn-cerrar-modal').addEventListener('click', function () {
-      modal.classList.remove('show');
-    });
+  var btnCerrar = document.getElementById('btn-cerrar-modal');
+  if (btnCerrar) btnCerrar.addEventListener('click', function(){ modal.classList.remove('show'); });
+  if (modal) modal.addEventListener('click', function(e){ if (e.target === modal) modal.classList.remove('show'); });
 
-    modal.addEventListener('click', function (e) {
-      if (e.target === modal) modal.classList.remove('show');
-    });
+  /* ---- SCROLL REVEAL ---- */
+  var reveals = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(function(el){ observer.observe(el); });
+  } else {
+    reveals.forEach(function(el){ el.classList.add('visible'); });
+  }
 
-  })();
-  </script>
-
+})();
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const hash = window.location.hash.replace("#", "");
+    if (hash) {
+      openTab(null, hash);
+    }
+  });
+</script>
 </body>
 </html>
